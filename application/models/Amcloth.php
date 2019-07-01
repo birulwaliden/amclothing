@@ -14,7 +14,8 @@ class Amcloth extends CI_Model {
 		$query=$this->db->get();
 		return $query->row();
 
-	} 
+	}
+
 	function get_barang(){
 		$this->db->select('tb_barang.*,tb_kategori.nama_kategori');
 		$this->db->from('tb_barang');
@@ -87,6 +88,32 @@ class Amcloth extends CI_Model {
 	function get_stock(){
 		$query=$this->db->get('tb_stock');
 		return $query->result();
+	}
+
+	function get_stock_by_id($id_stock){
+		// $id_store = $this->session->userdata('id_store');
+		$id_store = '2';
+		$this->db->select('tb_stock.*,tb_barang.*');
+		$this->db->from('tb_stock');
+		$this->db->join('tb_barang','tb_stock.kode_barang = tb_barang.kode_barang');
+		$this->db->where('tb_stock.kode_barang',$id_stock);
+		$this->db->where('tb_stock.id_store',$id_store);
+
+		$query=$this->db->get();
+
+		if ($query->num_rows() > 0) {
+			foreach ($query->result() as $data) {
+				$hasil = array(
+					'id_stock' => $data->kode_barang,
+					'nama_barang' => $data->nama_barang,
+					'harga' => $data->harga_jual,
+					'ukuran' => $data->ukuran,
+					'jumlah' => $data->jumlah,
+				);
+			}
+		}
+		return $hasil;
+
 	}
 
 	function save_stock($data){

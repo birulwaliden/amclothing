@@ -21,7 +21,7 @@
 	<!-- side nav css file -->
 
 	<!-- js-->
-	<script src="<?php echo base_url() ?>assets/js/jquery-1.11.1.min.js"></script>
+	<script src="<?php echo base_url() ?>assets/js/jquery-2.2.3.min.js"></script>
 	<script src="<?php echo base_url() ?>assets/js/modernizr.custom.js"></script>
 
 	<!--webfonts-->

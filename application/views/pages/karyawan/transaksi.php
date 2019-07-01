@@ -8,27 +8,121 @@
 					<h4>Transaksi</h4>
 				</div>
 				<div class="form-body">
-					<form> 
-						<div class="form-group"> 
-							<label for="">Id Transaksi</label> 
-							<input type="" name="" class="form-control">
-						</div> 
+					<!-- <form>  -->
 						<div class="form-group"> 
 							<label for="">Id Stock</label> 
-							<input type="" name="" class="form-control"> 
+							<input type="text" id="kode" name="id_stock" class="form-control"> 
 						</div>
 						<div class="form-group"> 
-							<label for="">Bayar</label> 
-							<input type="text" name="" class="form-control"> 
+							<label for="">nama</label> 
+							<input id="nama" type="text" readonly="readonly" name="nama" class="form-control"> 
+						</div>
+						<div class="form-group"> 
+							<label for="">ukuran</label> 
+							<input id="ukuran" type="text" readonly="readonly" name="ukuran" class="form-control"> 
+						</div>
+						<div class="form-group"> 
+							<label for="">harga</label> 
+							<input id="harga" type="number" readonly="readonly" name="harga" class="form-control"> 
+						</div>
+						<div class="form-group"> 
+							<label for="">Jumlah</label> 
+							<input max="" id="jumlah" type="number" name="jumlah" class="form-control"> 
 						</div> 
-						<div class="form-group"> 
-							<label for="">Tanggal Transaksi</label> 
-							<input type="date" class="form-control" name=""> 
-						</div>
-						<button type="submit" class="btn btn-default">Tambah Transaksi</button> 
-					</form> 
+
+						<button  class="add_cart btn btn-default">Tambah Transaksi</button> 
+						<!-- </form>  -->
+					</div>
 				</div>
+
+				<h4>Shopping Cart</h4>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Produk</th>
+							<th>Qty</th>
+							<th>Subtotal</th>
+							<th>Aksi</th>
+						</tr>
+					</thead>
+					<tbody id="detail_cart">
+
+					</tbody>
+
+				</table>
+
+
 			</div>
+
+
 		</div>
 	</div>
-</div>
+
+
+
+	<div class="clearfix"></div>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.add_cart').click(function(){
+				var produk_id    = document.getElementById("kode").value;
+				var produk_nama  = document.getElementById("nama").value;
+				var ukuran  = document.getElementById("ukuran").value;
+				var produk_harga = document.getElementById("harga").value;
+				var quantity     = document.getElementById("jumlah").value;
+				$.ajax({
+					url : "<?php echo base_url();?>karyawan/add_to_cart",
+					method : "POST",
+					data : {produk_id: produk_id, produk_nama: produk_nama, produk_harga: produk_harga, quantity: quantity,ukuran: ukuran},
+					success: function(data){
+						$('#detail_cart').html(data);
+					}
+				});
+			});
+
+        // Load shopping cart
+        $('#detail_cart').load("<?php echo base_url();?>karyawan/load_cart");
+
+        //Hapus Item Cart
+        $(document).on('click','.hapus_cart',function(){
+            var row_id=$(this).attr("id"); //mengambil row_id dari artibut id
+            $.ajax({
+            	url : "<?php echo base_url();?>karyawan/hapus_cart",
+            	method : "POST",
+            	data : {row_id : row_id},
+            	success :function(data){
+            		$('#detail_cart').html(data);
+            	}
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#kode').on('input',function(){
+
+			var kode=$(this).val();
+			$.ajax({
+				type : "POST",
+				url  : "<?php echo base_url('karyawan/get_barang_stock')?>",
+				dataType : "JSON",
+				data : {kode: kode},
+				cache:false,
+				success: function(data){
+					$.each(data,function(kode, nama_barang, harga, ukuran, jumlah){
+						$('[name="nama"]').val(data.nama_barang);
+						$('[name="harga"]').val(data.harga);
+						$('[name="ukuran"]').val(data.ukuran);
+						document.getElementById("jumlah").setAttribute("max",data.jumlah);
+
+
+					});
+
+				}
+			});
+			return false;
+		});
+
+	});
+</script>
