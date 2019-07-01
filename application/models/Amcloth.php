@@ -91,8 +91,8 @@ class Amcloth extends CI_Model {
 	}
 
 	function get_stock_by_id($id_stock){
-		// $id_store = $this->session->userdata('id_store');
-		$id_store = '2';
+		$id_store = $this->session->userdata('id_store');
+		// $id_store = '2';
 		$this->db->select('tb_stock.*,tb_barang.*');
 		$this->db->from('tb_stock');
 		$this->db->join('tb_barang','tb_stock.kode_barang = tb_barang.kode_barang');
