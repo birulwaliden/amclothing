@@ -42,6 +42,17 @@ class Amcloth extends CI_Model {
 		$this->db->insert('tb_barang',$data);
 	}
 
+	function get_id_struk(){
+		$this->db->order_by('id_struk','DESC');
+		$this->db->limit(1);
+		$query = $this->db->get('tb_struk');
+		return $query->row();
+	}
+
+	function save($table,$data){
+		$this->db->insert($table,$data);
+	}
+
 	function delete_kategori($id){
 		$this->db->set('deleted','1');
 		$this->db->where('id_kategori',$id);

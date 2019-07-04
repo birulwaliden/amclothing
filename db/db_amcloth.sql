@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: 18 Mei 2019 pada 11.32
--- Versi Server: 10.1.28-MariaDB
--- PHP Version: 7.1.11
+-- Host: localhost
+-- Generation Time: Jul 04, 2019 at 11:27 PM
+-- Server version: 10.3.15-MariaDB
+-- PHP Version: 7.2.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_barang`
+-- Table structure for table `tb_barang`
 --
 
 CREATE TABLE `tb_barang` (
@@ -40,7 +40,7 @@ CREATE TABLE `tb_barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_barang`
+-- Dumping data for table `tb_barang`
 --
 
 INSERT INTO `tb_barang` (`kode_barang`, `nama_barang`, `id_kategori`, `harga_beli`, `harga_jual`, `foto`, `ukuran`, `deleted`) VALUES
@@ -50,7 +50,7 @@ INSERT INTO `tb_barang` (`kode_barang`, `nama_barang`, `id_kategori`, `harga_bel
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_kategori`
+-- Table structure for table `tb_kategori`
 --
 
 CREATE TABLE `tb_kategori` (
@@ -60,7 +60,7 @@ CREATE TABLE `tb_kategori` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_kategori`
+-- Dumping data for table `tb_kategori`
 --
 
 INSERT INTO `tb_kategori` (`id_kategori`, `nama_kategori`, `deleted`) VALUES
@@ -73,20 +73,20 @@ INSERT INTO `tb_kategori` (`id_kategori`, `nama_kategori`, `deleted`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_pembelian`
+-- Table structure for table `tb_pembelian`
 --
 
 CREATE TABLE `tb_pembelian` (
   `id_pembelian` int(11) NOT NULL,
   `id_barang` int(11) NOT NULL,
   `jumlah` int(4) NOT NULL,
-  `tgl_pembelian` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `tgl_pembelian` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_po`
+-- Table structure for table `tb_po`
 --
 
 CREATE TABLE `tb_po` (
@@ -103,7 +103,7 @@ CREATE TABLE `tb_po` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_riwayat`
+-- Table structure for table `tb_riwayat`
 --
 
 CREATE TABLE `tb_riwayat` (
@@ -117,7 +117,7 @@ CREATE TABLE `tb_riwayat` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_stock`
+-- Table structure for table `tb_stock`
 --
 
 CREATE TABLE `tb_stock` (
@@ -129,7 +129,7 @@ CREATE TABLE `tb_stock` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_stock`
+-- Dumping data for table `tb_stock`
 --
 
 INSERT INTO `tb_stock` (`id_stock`, `kode_barang`, `id_store`, `jumlah`, `deleted`) VALUES
@@ -141,7 +141,7 @@ INSERT INTO `tb_stock` (`id_stock`, `kode_barang`, `id_store`, `jumlah`, `delete
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_store`
+-- Table structure for table `tb_store`
 --
 
 CREATE TABLE `tb_store` (
@@ -156,7 +156,7 @@ CREATE TABLE `tb_store` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_store`
+-- Dumping data for table `tb_store`
 --
 
 INSERT INTO `tb_store` (`id_store`, `nama_store`, `username`, `password`, `alamat`, `no_hp`, `JenisUser`, `deleted`) VALUES
@@ -168,16 +168,60 @@ INSERT INTO `tb_store` (`id_store`, `nama_store`, `username`, `password`, `alama
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_transaksi`
+-- Table structure for table `tb_struk`
+--
+
+CREATE TABLE `tb_struk` (
+  `id_struk` int(11) NOT NULL,
+  `total` int(11) NOT NULL,
+  `bayar` int(11) NOT NULL,
+  `deleted` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_struk`
+--
+
+INSERT INTO `tb_struk` (`id_struk`, `total`, `bayar`, `deleted`) VALUES
+(1, 180000, 200000, 0),
+(2, 180000, 210000, 0),
+(3, 130000, 140000, 0),
+(4, 130000, 140000, 0),
+(5, 130000, 140000, 0),
+(6, 130000, 140000, 0),
+(7, 130000, 140000, 0),
+(8, 130000, 140000, 0),
+(9, 80000, 100000, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_transaksi`
 --
 
 CREATE TABLE `tb_transaksi` (
   `id_transaksi` int(8) NOT NULL,
-  `id_stock` int(5) NOT NULL,
-  `bayar` int(10) NOT NULL,
-  `tgl_transaksi` date NOT NULL,
-  `deleted` int(1) NOT NULL
+  `id_stock` varchar(10) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `tgl_transaksi` timestamp NOT NULL DEFAULT current_timestamp(),
+  `deleted` int(1) NOT NULL,
+  `id_struk` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_transaksi`
+--
+
+INSERT INTO `tb_transaksi` (`id_transaksi`, `id_stock`, `jumlah`, `tgl_transaksi`, `deleted`, `id_struk`) VALUES
+(1, '0', 2, '2019-07-04 20:55:49', 0, 5),
+(2, '0', 1, '2019-07-04 20:55:49', 0, 5),
+(3, 'jkt0000001', 2, '2019-07-04 20:58:32', 0, 6),
+(4, 'kaos2xl2', 1, '2019-07-04 20:58:32', 0, 6),
+(5, 'jkt0000001', 2, '2019-07-04 21:01:16', 0, 7),
+(6, 'kaos2xl2', 1, '2019-07-04 21:01:16', 0, 7),
+(7, 'jkt0000001', 2, '2019-07-04 21:20:18', 0, 8),
+(8, 'kaos2xl2', 1, '2019-07-04 21:20:18', 0, 8),
+(9, 'kaos2xl2', 1, '2019-07-04 21:23:10', 0, 9);
 
 --
 -- Indexes for dumped tables
@@ -226,6 +270,12 @@ ALTER TABLE `tb_store`
   ADD PRIMARY KEY (`id_store`);
 
 --
+-- Indexes for table `tb_struk`
+--
+ALTER TABLE `tb_struk`
+  ADD PRIMARY KEY (`id_struk`);
+
+--
 -- Indexes for table `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
@@ -272,10 +322,16 @@ ALTER TABLE `tb_store`
   MODIFY `id_store` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `tb_struk`
+--
+ALTER TABLE `tb_struk`
+  MODIFY `id_struk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
-  MODIFY `id_transaksi` int(8) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_transaksi` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

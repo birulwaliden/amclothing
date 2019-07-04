@@ -23,14 +23,20 @@
 						</div>
 						<div class="form-group"> 
 							<label for="">harga</label> 
-							<input id="harga" type="number" readonly="readonly" name="harga" class="form-control"> 
+							<input id="harga" readonly type="number" name="harga" class="form-control"> 
+						</div>
+						<div class="form-group"> 
+							<label for="">diskon</label> 
+							<input id="diskon" type="number" name="diskon" class="form-control"> 
 						</div>
 						<div class="form-group"> 
 							<label for="">Jumlah</label> 
 							<input max="" id="jumlah" type="number" name="jumlah" class="form-control"> 
 						</div> 
 
-						<button  class="add_cart btn btn-default">Tambah Transaksi</button> 
+						<button  class="add_cart btn btn-default">Tambah Transaksi</button>
+
+
 						<!-- </form>  -->
 					</div>
 				</div>
@@ -51,12 +57,31 @@
 
 				</table>
 
+				<div class="form-body">
+					<form method="post" action="<?php echo base_url() ?>karyawan/checkout" target='_blank'>
+						
 
+						<div class="form-group"> 
+							<label for="">Bayar</label> 
+							<div class="input-group">
+								
+								<span class="input-group-addon">Rp.</span>
+								<input id="bayar" required type="number" name="bayar" class="form-control"> 
+							</div>
+						</div>
+
+						<button type="submit" onclick="location.reload();" class="btn btn-success btn-block">Bayar</button>
+					</form> 
+				</div>
 			</div>
 
 
 		</div>
+
+
 	</div>
+
+
 
 
 
@@ -68,16 +93,26 @@
 				var produk_id    = document.getElementById("kode").value;
 				var produk_nama  = document.getElementById("nama").value;
 				var ukuran  = document.getElementById("ukuran").value;
-				var produk_harga = document.getElementById("harga").value;
+				var harga_produk = document.getElementById("harga").value;
 				var quantity     = document.getElementById("jumlah").value;
+				var diskon     = document.getElementById("diskon").value;
+				var harga_jual = parseInt(harga_produk) - parseInt(diskon);
 				$.ajax({
 					url : "<?php echo base_url();?>karyawan/add_to_cart",
 					method : "POST",
-					data : {produk_id: produk_id, produk_nama: produk_nama, produk_harga: produk_harga, quantity: quantity,ukuran: ukuran},
+					data : {produk_id: produk_id, produk_nama: produk_nama, produk_harga: harga_jual, quantity: quantity,ukuran: ukuran},
 					success: function(data){
 						$('#detail_cart').html(data);
+						document.getElementById("kode").value="";
+						document.getElementById("nama").value="";
+						document.getElementById("ukuran").value="";
+						document.getElementById("harga").value="";
+						document.getElementById("diskon").value="";
+						document.getElementById("jumlah").value="";
 					}
 				});
+
+
 			});
 
         // Load shopping cart

@@ -39,6 +39,30 @@ class Karyawan extends CI_Controller {
 		$data['content']=$this->load->view('pages/Karyawan/transaksi','',true);
 		$this->load->view('default_karyawan',$data);
 	}
+
+	public function checkout(){
+		$data2['bayar'] = $this->input->post('bayar');
+		$data2['total'] = $this->cart->total();
+		$this->Amcloth->save('tb_struk',$data2);
+		$id_struk = $this->Amcloth->get_id_struk();
+		foreach ($this->cart->contents() as $items) {
+			$data['id_stock'] = $items['id'];
+			$data['jumlah'] = $items['qty'];
+			// $data['id_store'] = $this->session->userdata('id_store');
+			$data['id_struk'] = $id_struk->id_struk;
+			$this->Amcloth->save('tb_transaksi',$data);
+			// echo json_encode($data);
+		}
+
+		$data2['cart'] = $this->cart->contents();
+
+		$this->cart->destroy();
+		$this->load->view('struk',$data2);
+		// echo json_encode($data2);
+
+		
+
+	}
 	public function save_stock()
 	{
 		$kode_barang= $_POST['barang'];
