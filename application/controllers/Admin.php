@@ -88,7 +88,7 @@ class Admin extends CI_Controller {
 		$data['kode_barang']=$nama[0].$data['id_kategori'].$data['ukuran'].$barang;
 
 		$config['upload_path']          = './fotoproduk';
-		$config['allowed_types']        = 'gif|jpg|png';
+		$config['allowed_types']        = 'gif|jpg|png|jpeg';
 		$config['max_size']             = 5000;
 		$this->load->library('upload', $config);
 

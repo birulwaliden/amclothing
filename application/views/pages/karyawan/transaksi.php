@@ -27,7 +27,7 @@
 						</div>
 						<div class="form-group"> 
 							<label for="">diskon</label> 
-							<input id="diskon" type="number" name="diskon" class="form-control"> 
+							<input id="diskon" value="0" type="number" name="diskon" class="form-control"> 
 						</div>
 						<div class="form-group"> 
 							<label for="">Jumlah</label> 
