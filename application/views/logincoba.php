@@ -4,7 +4,11 @@
 <body>
 	<div class="mid-class">
 		<div class="art-right-w3ls">
+			
 			<h2>Sign In Here</h2>
+			<?php if($this->session->flashdata('error')){ ?>
+				<p style="color: white">*<?php echo $this->session->flashdata('error'); ?></p>
+			<?php } ?>
 			<form action="<?php echo base_url() ?>login/cek_login" method="post">
 				<div class="main">
 					<div class="form-left-to-w3l">
@@ -27,7 +31,7 @@
 					<button type="submit">Sign In</button>
 				</div>
 			</form>
-			
+
 		</div>
 		<div class="art-left-w3ls">
 			<h1 class="header-w3ls">

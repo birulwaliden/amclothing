@@ -32,7 +32,8 @@ class Login extends CI_Controller {
 		$data['password']= md5($_POST['password']);
 		$cek=$this->Amcloth->cek_login($data);
 		if (!isset($cek)) {
-			echo "password salah";
+			$this->session->set_flashdata('error', 'Username/Password Salah');
+			redirect('Login');
 		}else{
 			$user = array(
 				'username' => $cek->username , 
@@ -41,7 +42,7 @@ class Login extends CI_Controller {
 				'alamat' => $cek->alamat , 
 				'no_hp' => $cek->no_hp,
 				'jenisuser' => $cek->JenisUser
-				);
+			);
 			$this->session->set_userdata($user);
 
 			if ($cek->JenisUser==0) {
