@@ -24,15 +24,40 @@ class Karyawan extends CI_Controller {
 	 */
 	public function index()
 	{
+		$id = $this->session->userdata('id_store');
+		$data['history']=$this->Amcloth->get_grap($id);
 		$data['content']=$this->load->view('pages/Karyawan/dashboard','',true);
 		$this->load->view('default_karyawan',$data);
+		// echo json_encode($data);
 	}
 	public function stock()
 	{
-		$data2['stock']=$this->Amcloth->get_stock();
+		$id = $this->session->userdata('id_store');
+		$data2['stock']=$this->Amcloth->get_stock($id);
 		$data2['barang']=$this->Amcloth->get_barang();
+		// foreach ($stock as $s) {
+
+		// }
 		$data['content']=$this->load->view('pages/Karyawan/stock',$data2,true);
 		$this->load->view('default_karyawan',$data);
+		// echo json_encode($stock);
+	}
+
+	public function history()
+	{
+		$id = $this->session->userdata('id_store');
+		$data2['history']=$this->Amcloth->get_history($id);
+		$data['content']=$this->load->view('pages/Karyawan/history',$data2,true);
+		$this->load->view('default_karyawan',$data);
+		// echo json_encode($data2);
+	}
+
+
+	public function stockout(){
+		$id = $this->session->userdata('id_store');
+		$data2['stockout']=$this->Amcloth->get_stockout($id);
+
+		echo json_encode($data2);
 	}
 	public function transaksi()
 	{
@@ -41,16 +66,18 @@ class Karyawan extends CI_Controller {
 	}
 
 	public function checkout(){
+		$data2['id_store'] = $this->session->userdata('id_store');
 		$data2['bayar'] = $this->input->post('bayar');
 		$data2['total'] = $this->cart->total();
 		$this->Amcloth->save('tb_struk',$data2);
 		$id_struk = $this->Amcloth->get_id_struk();
 		foreach ($this->cart->contents() as $items) {
-			$data['id_stock'] = $items['id'];
+			$data['id_stock'] = $this->Amcloth->get_id_stock($items['id'])->id_stock;
 			$data['jumlah'] = $items['qty'];
-			// $data['id_store'] = $this->session->userdata('id_store');
+
 			$data['id_struk'] = $id_struk->id_struk;
 			$this->Amcloth->save('tb_transaksi',$data);
+			$this->Amcloth->update_stock($data['id_stock'],$items['qty']);
 			// echo json_encode($data);
 		}
 
@@ -65,11 +92,15 @@ class Karyawan extends CI_Controller {
 	}
 	public function save_stock()
 	{
+		$id = $this->session->userdata('id_store');
 		$kode_barang= $_POST['barang'];
 		$data['kode_barang']=$kode_barang;
 		$data['jumlah']=$_POST['jumlah'];
 		$data['id_store']=$_POST['id'];
 		$store = $_POST['store'];
+
+		
+		
 		if ($store > 0	) {
 			$ambil = $_POST['jumlah'];
 			$jumlah =$this->Amcloth->get_jumlah_stock($kode_barang,$store);
@@ -77,8 +108,16 @@ class Karyawan extends CI_Controller {
 			$this->Amcloth->update_jumlah_stock($kode_barang,$store,$jumlah);
 			// echo json_encode($jumlah);
 		}
+		$get_stock = $this->Amcloth->get_stock_barang($id,$data['kode_barang']);
+		if (!empty($get_stock)) {
+			// echo $get_stock->id_stock;
+			$this->Amcloth->ambil_stock($get_stock->id_stock,$data['jumlah']);
+		}else{
+			// echo "gagal";
+			$this->Amcloth->save_stock($data);
+		}
+		
 
-		$this->Amcloth->save_stock($data);
 
 
 		redirect('karyawan/stock');

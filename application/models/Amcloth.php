@@ -96,10 +96,92 @@ class Amcloth extends CI_Model {
 
 	}
 
-	function get_stock(){
+	function get_stock($id){
+		$this->db->where('id_store',$id);
 		$query=$this->db->get('tb_stock');
 		return $query->result();
 	}
+
+	function get_history($id){
+		$this->db->join('tb_transaksi','tb_transaksi.id_struk = tb_struk.id_struk');
+		$this->db->join('tb_stock','tb_stock.id_stock = tb_transaksi.id_stock');
+		$this->db->where('tb_struk.id_store',$id);
+		// $this->db->group_by('tb_stock.kode_barang');
+		$query = $this->db->get('tb_struk');
+		
+		return $query->result();
+	}
+
+	function get_stockout($id){
+		// $this->db->select('sum(tb_transaksi.jumlah) as stockout,tb_stock.kode_barang');
+		// $this->db->select('tb_transaksi.*');
+		$this->db->from('tb_stock');
+		$this->db->join('tb_transaksi','tb_stock.id_stock = tb_transaksi.id_stock' ,'right');
+		$this->db->join('tb_struk','tb_struk.id_struk = tb_transaksi.id_struk');
+		// $this->db->where('tb_struk.id_struk',$id);
+		// $this->db->where('tb_struk.id_store',$id);
+		$this->db->where('tb_stock.id_store',$id);
+		// $this->db->group_by('tb_stock.kode_barang');
+		$query = $this->db->get();
+		// return $query->row();
+		return $query->result();
+	}
+
+	function get_stockout_id($id,$kode){
+		$this->db->select('sum(tb_transaksi.jumlah) as stockout,tb_stock.kode_barang');
+		// $this->db->select('sum(tb_transaksi.jumlah) as stockout,tb_stock.kode_barang');
+		// $this->db->select('tb_transaksi.*');
+		$this->db->from('tb_transaksi');
+		$this->db->join('tb_stock','tb_stock.id_stock = tb_transaksi.id_stock');
+		$this->db->join('tb_struk','tb_struk.id_struk = tb_transaksi.id_struk');
+		// $this->db->where('tb_struk.id_struk',$id);
+		// $this->db->where('tb_struk.id_store',$id);
+		$this->db->where('tb_stock.kode_barang',$kode);
+		$this->db->where('tb_stock.id_store',$id);
+		$this->db->group_by('tb_stock.kode_barang');
+		$query = $this->db->get();
+		// return $query->row();
+		// return $query->result();
+		return $query->row();
+	}
+
+	function get_history_store($id){
+		$this->db->where('tb_struk.id_store',$id);
+		// $this->db->group_by('tb_stock.kode_barang');
+		$query = $this->db->get('tb_struk');
+		
+		return $query->result();
+	}
+
+	function get_grap($id){
+		$this->db->select('sum(tb_struk.total) as pendapatan, DATE_FORMAT(tb_transaksi.tgl_transaksi, "%d") as tanggal,tb_struk.id_store');
+		$this->db->join('tb_transaksi','tb_transaksi.id_struk = tb_struk.id_struk');
+		$this->db->where('tb_struk.id_store',$id);
+		$this->db->group_by('date(tb_transaksi.tgl_transaksi)');
+		$this->db->order_by('date(tb_transaksi.tgl_transaksi)','DESC');
+		$query = $this->db->get('tb_struk');
+		
+		return $query->result();
+	}
+
+
+	function get_stock_now($id){
+		$this->db->join('tb_transaksi','tb_transaksi.id_struk = tb_struk.id_struk');
+		$this->db->join('tb_stock','tb_stock.id_stock = tb_transaksi.id_stock');
+		$this->db->where('tb_struk.id_store',$id);
+		// $this->db->group_by('tb_stock.kode_barang');
+		$query = $this->db->get('tb_struk');
+		
+		return $query->result();
+	}
+
+	function get_stock_barang($id,$kode_barang){
+		$this->db->where('id_store',$id);
+		$this->db->where('kode_barang',$kode_barang);
+		$query = $this->db->get('tb_stock');
+		return $query->row();
+	}
+
 
 	function get_stock_by_id($id_stock){
 		$id_store = $this->session->userdata('id_store');
@@ -127,6 +209,20 @@ class Amcloth extends CI_Model {
 
 	}
 
+	function get_id_stock($id_stock){
+		$id_store = $this->session->userdata('id_store');
+		// $id_store = '2';
+		$this->db->select('tb_stock.*,tb_barang.*');
+		$this->db->from('tb_stock');
+		$this->db->join('tb_barang','tb_stock.kode_barang = tb_barang.kode_barang');
+		$this->db->where('tb_stock.kode_barang',$id_stock);
+		$this->db->where('tb_stock.id_store',$id_store);
+		$query = $this->db->get();
+
+		return $query->row();
+
+	}
+
 	function save_stock($data){
 		$this->db->insert('tb_stock',$data);
 	}
@@ -146,5 +242,13 @@ class Amcloth extends CI_Model {
 		$this->db->where('id_store',$id_store);
 		$this->db->update('tb_stock');
 
+	}
+
+	function update_stock($id,$jumlah){
+		$this->db->query("UPDATE tb_stock SET jumlah = jumlah-'$jumlah' WHERE id_stock = '$id' ");
+	}
+
+	function ambil_stock($id,$jumlah){
+		$this->db->query("UPDATE tb_stock SET jumlah = jumlah+'$jumlah' WHERE id_stock = '$id' ");
 	}
 }

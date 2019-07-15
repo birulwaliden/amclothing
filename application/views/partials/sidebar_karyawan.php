@@ -29,6 +29,12 @@
 					</a>
 				</li>
 
+				<li class="treeview">
+					<a href="<?php echo base_url() ?>karyawan/history">
+						<i class="fa fa-history"></i> <span>Histori</span>
+					</a>
+				</li>
+
 
 			</ul>
 		</div>
