@@ -1,34 +1,42 @@
 <div id="page-wrapper">
 	<div class="main-page">
-		<h2 class="title1">Data Barang</h2>
-		<h1>Data Barang</h1>
-		<table class="table"> 
-			<tr>
-				<td>Kode Barang</td>
-				<td>Nama Barang</td>
-				<td>Kategori</td>
-				<td>Harga Beli</td>
-				<td>Harga Jual</td>
-				<td>Foto</td>
-				<td>Ukuran</td>
-				<td>Action</td>
-			</tr>
-			<?php foreach ($barang as $row) { ?>
+		<div class="div1 style-2 row widget-shadow">
+			<h2 class="title1">Data Barang</h2>
+			<h1>Data Barang</h1>
+			<table class="table datatables"> 
+				<thead>
+					<tr>
+						<td>Kode Barang</td>
+						<td>Nama Barang</td>
+						<td>Kategori</td>
+						<td>Harga Beli</td>
+						<td>Harga Jual</td>
+						<td>Foto</td>
+						<td>Ukuran</td>
+						<td>Barcode</td>
+						<td>Action</td>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($barang as $row) { ?>
 
-			
-			<tr>
-				<td><?php echo $row->kode_barang; ?></td>
-				<td><?php echo $row->nama_barang; ?></td>
-				<td><?php echo $row->nama_kategori; ?></td>
-				<td><?php echo $row->harga_jual; ?></td>
-				<td><?php echo $row->harga_beli; ?></td>
-				<td><img style="height: 2%" src="<?php echo base_url() ?>fotoproduk/<?php echo $row->foto; ?>"></td>
-				<td><?php echo $row->ukuran; ?></td>
-				<td><a href="<?php echo base_url() ?>admin/hapus_barang/<?php echo $row->kode_barang; ?>" class="btn btn-danger">Hapus</a>
-					<a href="<?php echo base_url() ?>admin/edit_barang/<?php echo $row->kode_barang; ?>" class="btn btn-info">Edit</a></td>
-				</tr>
-				<?php } ?>
-			</table>
+
+						<tr>
+							<td><?php echo $row->kode_barang; ?></td>
+							<td><?php echo $row->nama_barang; ?></td>
+							<td><?php echo $row->nama_kategori; ?></td>
+							<td><?php echo $row->harga_jual; ?></td>
+							<td><?php echo $row->harga_beli; ?></td>
+							<td><img src="<?php echo base_url() ?>admin/set_barcode/<?php echo $row->kode_barang; ?>"></td>
+							<td><img style="height: 2%" src="<?php echo base_url() ?>fotoproduk/<?php echo $row->foto; ?>"></td>
+							<td><?php echo $row->ukuran; ?></td>
+							<td><a href="<?php echo base_url() ?>admin/hapus_barang/<?php echo $row->kode_barang; ?>" class="btn btn-danger">Hapus</a>
+								<a href="<?php echo base_url() ?>admin/edit_barang/<?php echo $row->kode_barang; ?>" class="btn btn-info">Edit</a></td>
+							</tr>
+						<?php } ?>
+					</tbody>
+				</table>
+			</div>
 			<button <a href="" class="btn btn-info">Cetak Laporan</a></button>
 		</div>
 		<br>
@@ -49,7 +57,7 @@
 							<select name="kategori" class="form-control">
 								<option value="" disabled selected>-Pilih Kategori-</option>
 								<?php foreach ($kategori as $k ) {?>
-								<option value="<?php echo $k->id_kategori ?>"><?php echo $k->nama_kategori ?></option>
+									<option value="<?php echo $k->id_kategori ?>"><?php echo $k->nama_kategori ?></option>
 								<?php } ?>
 							</select>
 						</div> 

@@ -5,6 +5,7 @@ class Superadmin extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 		$this->load->model('Amcloth');
+		
 	}
 	/**
 	 * Index Page for this controller.
@@ -14,7 +15,7 @@ class Superadmin extends CI_Controller {
 	 *	- or -
 	 * 		http://example.com/index.php/welcome/index
 	 *	- or -
-	 * Since this controller is set as the default controller in
+	 * Since this controller is set as the default_superadmin controller in
 	 * config/routes.php, it's displayed at http://example.com/
 	 *
 	 * So any other public methods not prefixed with an underscore will
@@ -24,29 +25,29 @@ class Superadmin extends CI_Controller {
 	public function index()
 	{
 		$data['content']=$this->load->view('pages/superadmin/dashboard','',true);
-		$this->load->view('default',$data);
+		$this->load->view('default_superadmin',$data);
 	}
 	public function barang()
 	{
 		$data2['barang']=$this->Amcloth->get_barang();
 		$data['content']=$this->load->view('pages/superadmin/databarang',$data2,true);
-		$this->load->view('default',$data);
+		$this->load->view('default_superadmin',$data);
 	}
 	public function stock()
 	{
 		$data['content']=$this->load->view('pages/superadmin/stock','',true);
-		$this->load->view('default',$data);
+		$this->load->view('default_superadmin',$data);
 	}
 	public function transaksi()
 	{
 		$data['content']=$this->load->view('pages/superadmin/transaksi','',true);
-		$this->load->view('default',$data);
+		$this->load->view('default_superadmin',$data);
 	}
 	public function kategori()
 	{
 		$data2['kategori']=$this->Amcloth->get_kategori();
 		$data['content']=$this->load->view('pages/superadmin/kategori',$data2,true);
-		$this->load->view('default',$data);
+		$this->load->view('default_superadmin',$data);
 	}
 	public function tambah_kategori()
 	{
@@ -63,7 +64,7 @@ class Superadmin extends CI_Controller {
 	{
 		$data2['kategori']=$this->Amcloth->edit_kategori($id);
 		$data['content']=$this->load->view('pages/superadmin/edit_kategori',$data2,true);
-		$this->load->view('default',$data);
+		$this->load->view('default_superadmin',$data);
 
 		echo json_encode($data2);
 	}
@@ -74,4 +75,6 @@ class Superadmin extends CI_Controller {
 		$this->Amcloth->update_kategori($id,$nama);
 		redirect('superadmin/kategori');
 	}
+
+
 }

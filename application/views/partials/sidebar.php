@@ -24,15 +24,15 @@
 					</a>
 				</li>
 				<li class="treeview">
-					<a href="<?php echo base_url() ?>admin/stock">
-						<i class="fa fa-briefcase"></i> <span>Stock</span>
+					<a href="<?php echo base_url() ?>admin/penjualan">
+						<i class="fa fa-shopping-cart"></i> <span>Data Penjualan</span>
 					</a>
 				</li>
-				<li class="treeview">
+				<!-- <li class="treeview">
 					<a href="<?php echo base_url() ?>admin/transaksi">
 						<i class="fa fa-shopping-cart"></i> <span>Transaksi</span>
 					</a>
-				</li>
+				</li> -->
 			<!-- 	<li class="treeview">
 					<a href="<?php echo base_url() ?>admin/kategori">
 						<i class="fa fa-folder"></i> <span>Kategori</span>

@@ -11,6 +11,7 @@
 
 	<!-- Custom CSS -->
 	<link href="<?php echo base_url() ?>assets/css/style.css" rel='stylesheet' type='text/css' />
+	
 
 	<!-- font-awesome icons CSS -->
 	<link href="<?php echo base_url() ?>assets/css/font-awesome.css" rel="stylesheet"> 
@@ -22,6 +23,7 @@
 
 	<!-- js-->
 	<script src="<?php echo base_url() ?>assets/js/jquery-2.2.3.min.js"></script>
+
 	<script src="<?php echo base_url() ?>assets/js/modernizr.custom.js"></script>
 
 	<!--webfonts-->
@@ -33,5 +35,16 @@
 	<script src="<?php echo base_url() ?>assets/js/custom.js"></script>
 	<link href="<?php echo base_url() ?>assets/css/custom.css" rel="stylesheet">
 	<!--//Metis Menu -->
+
+	<script src="<?php echo base_url() ?>assets/DataTables/datatables.min.js"></script>
+	<link href="<?php echo base_url() ?>assets/DataTables/datatables.min.css" rel='stylesheet' type='text/css' />
+
+	
+	<script type="text/javascript">
+
+		$(document).ready( function () {
+			$('.datatables').DataTable();
+		} );
+	</script>
 
 </head> 

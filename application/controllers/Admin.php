@@ -5,6 +5,7 @@ class Admin extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 		$this->load->model('Amcloth');
+		// $this->load->library('Zend');
 	}
 	/**
 	 * Index Page for this controller.
@@ -163,5 +164,42 @@ class Admin extends CI_Controller {
 		}
 
 
+	}
+
+	public function penjualan()
+	{
+		// $id = $this->session->userdata('id_store');
+		$data2['penjualan']=$this->Amcloth->get_laporan_penjualan();
+		$data['content']=$this->load->view('pages/admin/datapenjualan',$data2,true);
+		$this->load->view('default',$data);
+		// echo json_encode($data2);
+	}
+
+	public function detailpenjualan($id)
+	{
+		// $id = $this->session->userdata('id_store');
+		$data2['history']=$this->Amcloth->get_struk($id);
+		$data['content']=$this->load->view('pages/admin/detailpenjualan',$data2,true);
+		$this->load->view('default',$data);
+		// echo json_encode($data2);
+	}
+
+	public function cobabarcode()
+	{
+		//I'm just using rand() function for data example
+		$temp = rand(10000, 99999);
+		$this->set_barcode('XY12012');
+	}
+
+	public function set_barcode($code)
+	{
+		//load library
+		$this->load->library('Zend');
+		//load in folder Zend
+		$this->zend->load('Zend/Barcode');
+		//generate barcode
+		$file = Zend_Barcode::render('code128', 'image', array('text'=>$code), array());
+		// $store_image = imagepng($file,"1.png");
+		// echo json_encode($file);
 	}
 }

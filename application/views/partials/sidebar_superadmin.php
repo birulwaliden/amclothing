@@ -18,16 +18,8 @@
 						<i class="fa fa-dashboard"></i> <span>Dashboard</span>
 					</a>
 				</li>
-				<li class="treeview">
-					<a href="<?php echo base_url() ?>superadmin/barang">
-						<i class="fa fa-list-alt"></i> <span>Data Barang</span>
-					</a>
-				</li>
-				<li class="treeview">
-					<a href="<?php echo base_url() ?>superadmin/stock">
-						<i class="fa fa-briefcase"></i> <span>Stock</span>
-					</a>
-				</li>
+
+
 				<li class="treeview">
 					<a href="<?php echo base_url() ?>superadmin/transaksi">
 						<i class="fa fa-shopping-cart"></i> <span>Transaksi</span>
@@ -36,6 +28,12 @@
 				<li class="treeview">
 					<a href="<?php echo base_url() ?>superadmin/kategori">
 						<i class="fa fa-folder"></i> <span>Kategori</span>
+					</a>
+				</li>
+
+				<li class="treeview">
+					<a href="<?php echo base_url() ?>superadmin/store">
+						<i class="fa fa-folder"></i> <span>Data Store</span>
 					</a>
 				</li>
 

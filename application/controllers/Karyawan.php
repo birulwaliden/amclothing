@@ -30,6 +30,17 @@ class Karyawan extends CI_Controller {
 		$this->load->view('default_karyawan',$data);
 		// echo json_encode($data);
 	}
+
+	public function detailpenjualan($id)
+	{
+		// $id = $this->session->userdata('id_store');
+		$data2['history']=$this->Amcloth->get_struk($id);
+		$data['content']=$this->load->view('pages/admin/detailpenjualan',$data2,true);
+		$this->load->view('default_karyawan',$data);
+		// echo json_encode($data2);
+	}
+
+
 	public function stock()
 	{
 		$id = $this->session->userdata('id_store');
@@ -90,6 +101,8 @@ class Karyawan extends CI_Controller {
 		
 
 	}
+
+	
 	public function save_stock()
 	{
 		$id = $this->session->userdata('id_store');
