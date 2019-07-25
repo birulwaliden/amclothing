@@ -34,8 +34,21 @@ class Amcloth extends CI_Model {
 		return$query->result();
 	}
 
+	function get_store(){
+		$this->db->select('tb_store.*');
+		$this->db->from('tb_store');
+		$this->db->where('deleted','0');
+		$this->db->where('JenisUser','0');
+		$query=$this->db->get();
+		return$query->result();
+	}
+
 	function save_kategori($data){
 		$this->db->insert('tb_kategori',$data);
+	}
+
+	function save_store($data){
+		$this->db->insert('tb_store',$data);
 	}
 
 	function save_barang($data){

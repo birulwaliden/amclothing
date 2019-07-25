@@ -49,11 +49,30 @@ class Superadmin extends CI_Controller {
 		$data['content']=$this->load->view('pages/superadmin/kategori',$data2,true);
 		$this->load->view('default_superadmin',$data);
 	}
+
+	public function store()
+	{
+		$data2['store']=$this->Amcloth->get_store();
+		$data['content']=$this->load->view('pages/superadmin/datastore',$data2,true);
+		$this->load->view('default_superadmin',$data);
+	}
+
 	public function tambah_kategori()
 	{
 		$data['nama_kategori']=$_POST['nama'];
 		$this->Amcloth->save_kategori($data);
 		redirect('superadmin/kategori');
+	}
+
+	public function tambah_store()
+	{
+		$data['nama_store']=$_POST['nama'];
+		$data['username']=$_POST['username'];
+		$data['alamat']=$_POST['alamat'];
+		$data['no_hp']=$_POST['nohp'];
+		$data['password']=md5($_POST['nama']);
+		$this->Amcloth->save_store($data);
+		redirect('superadmin/store');
 	}
 	public function delete_kategori($id)
 	{

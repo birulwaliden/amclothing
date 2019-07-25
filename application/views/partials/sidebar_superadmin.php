@@ -20,11 +20,7 @@
 				</li>
 
 
-				<li class="treeview">
-					<a href="<?php echo base_url() ?>superadmin/transaksi">
-						<i class="fa fa-shopping-cart"></i> <span>Transaksi</span>
-					</a>
-				</li>
+				
 				<li class="treeview">
 					<a href="<?php echo base_url() ?>superadmin/kategori">
 						<i class="fa fa-folder"></i> <span>Kategori</span>

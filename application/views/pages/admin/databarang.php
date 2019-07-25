@@ -50,11 +50,11 @@
 
 						<div class="form-group"> 
 							<label for="">Nama Barang</label> 
-							<input type="" name="nama" class="form-control" placeholder="Masukan nama barang ..."> 
+							<input required type="text" name="nama" class="form-control" placeholder="Masukan nama barang ..."> 
 						</div>
 						<div class="form-group"> 
 							<label for="dropdown" >Kategori</label> 
-							<select name="kategori" class="form-control">
+							<select required name="kategori" class="form-control">
 								<option value="" disabled selected>-Pilih Kategori-</option>
 								<?php foreach ($kategori as $k ) {?>
 									<option value="<?php echo $k->id_kategori ?>"><?php echo $k->nama_kategori ?></option>
@@ -63,22 +63,22 @@
 						</div> 
 						<div class="form-group"> 
 							<label for="">Harga Beli</label> 
-							<input type="text" name="beli" class="form-control" placeholder="Masukan harga beli ..."> 
+							<input required type="text" name="beli" class="form-control" placeholder="Masukan harga beli ..."> 
 						</div> 
 						<div class="form-group"> 
 							<label for="">Harga Jual</label> 
-							<input type="text" name="jual" class="form-control" placeholder="Masukan harga jual ..."> 
+							<input required type="text" name="jual" class="form-control" placeholder="Masukan harga jual ..."> 
 						</div>
 
 						<div class="form-group"> 
 
 							<label for="exampleInputFile">Pilih Foto</label> 
-							<input name="foto" type="file" id="exampleInputFile"> 
+							<input required name="foto" type="file" id="exampleInputFile"> 
 							<p class="help-block">Tambahkan foto produk</p> 
 						</div> 
 						<div class="form-group">
 							<label for="radio" class="col-sm-2 control-label">Ukuran</label>
-							<div class="col-sm-8">
+							<div required class="col-sm-8">
 								<div class="radio-inline"><label><input id="ukuran" name="ukuran" type="radio" value="S"> S</label></div>
 								<div class="radio-inline"><label><input id="ukuran" name="ukuran" type="radio" value="M"> M</label></div>
 								<div class="radio-inline"><label><input id="ukuran" name="ukuran" type="radio" value="L"> L</label></div>
