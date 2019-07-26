@@ -109,6 +109,7 @@
 						document.getElementById("harga").value="";
 						document.getElementById("diskon").value="";
 						document.getElementById("jumlah").value="";
+						document.getElementById("kode").autofocus;
 
 
 					}
