@@ -11,7 +11,7 @@
 					<!-- <form>  -->
 						<div class="form-group"> 
 							<label for="">Id Stock</label> 
-							<input type="text" id="kode"  name="id_stock" class="form-control"> 
+							<input type="text" id="kode" autofocus name="id_stock" class="form-control"> 
 						</div>
 						<div class="form-group"> 
 							<label for="">nama</label> 

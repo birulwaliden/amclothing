@@ -13,7 +13,7 @@
 			</div>	
 		</div>
 		<br>
-		<div class="blank-page widget-shadow scroll" id="style-2 div1">
+		<!-- <div class="blank-page widget-shadow scroll" id="style-2 div1">
 			<h1>Riwayat</h1>
 			
 			<table class="table"> 
@@ -30,6 +30,6 @@
 					<td><a href="" class="btn btn-info">Detail</a></td>
 				</tr>
 			</table>
-		</div>
+		</div> -->
 	</div>
 </div>
