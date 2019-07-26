@@ -11,7 +11,7 @@
 					<!-- <form>  -->
 						<div class="form-group"> 
 							<label for="">Id Stock</label> 
-							<input type="text" id="kode" name="id_stock" class="form-control"> 
+							<input type="text" id="kode"  name="id_stock" class="form-control"> 
 						</div>
 						<div class="form-group"> 
 							<label for="">nama</label> 
@@ -58,7 +58,7 @@
 				</table>
 
 				<div class="form-body">
-					<form method="post" action="<?php echo base_url() ?>karyawan/checkout" target='_blank'>
+					<form method="post" action="<?php echo base_url() ?>karyawan/checkout">
 						
 
 						<div class="form-group"> 
@@ -66,11 +66,11 @@
 							<div class="input-group">
 								
 								<span class="input-group-addon">Rp.</span>
-								<input id="bayar" required type="number" name="bayar" class="form-control"> 
+								<input id="bayar" min="<?php echo $this->cart->total() ?>" required type="number" name="bayar" class="form-control"> 
 							</div>
 						</div>
 
-						<button type="submit" onclick="location.reload();" class="btn btn-success btn-block">Bayar</button>
+						<button type="submit" class="btn btn-success btn-block">Bayar</button>
 					</form> 
 				</div>
 			</div>
@@ -109,6 +109,8 @@
 						document.getElementById("harga").value="";
 						document.getElementById("diskon").value="";
 						document.getElementById("jumlah").value="";
+
+
 					}
 				});
 
