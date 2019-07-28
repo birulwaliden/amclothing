@@ -3,7 +3,7 @@
 		<div class="div1 style-2 row widget-shadow">
 			<h2 class="title1">Data Barang</h2>
 			<h1>Data Barang</h1>
-			<table class="table datatables"> 
+			<table class="table datatables" id="printTable"> 
 				<thead>
 					<tr>
 						<td>Kode Barang</td>
@@ -11,9 +11,9 @@
 						<td>Kategori</td>
 						<td>Harga Beli</td>
 						<td>Harga Jual</td>
+						<td>Barcode</td>
 						<td>Foto</td>
 						<td>Ukuran</td>
-						<td>Barcode</td>
 						<td>Action</td>
 					</tr>
 				</thead>
@@ -37,8 +37,23 @@
 					</tbody>
 				</table>
 			</div>
-			<button <a href="" class="btn btn-info">Cetak Laporan</a></button>
+			<button id="print" class="btn btn-info">Cetak Laporan</button>
 		</div>
+
+		<script type="text/javascript">
+			function printData()
+			{
+				var divToPrint=document.getElementById("printTable");
+				newWin= window.open("");
+				newWin.document.write(divToPrint.outerHTML);
+				newWin.print();
+				newWin.close();
+			}
+
+			$('#print').on('click',function(){
+				printData();
+			})
+		</script>
 		<br>
 		<div id="style-2 div1">
 			<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
