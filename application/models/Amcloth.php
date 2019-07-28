@@ -46,6 +46,9 @@ class Amcloth extends CI_Model {
 	function save_kategori($data){
 		$this->db->insert('tb_kategori',$data);
 	}
+	function save_po($data){
+		$this->db->insert('tb_po',$data);
+	}
 
 	function save_store($data){
 		$this->db->insert('tb_store',$data);
@@ -113,6 +116,17 @@ class Amcloth extends CI_Model {
 		$this->db->where('id_store',$id);
 		$query=$this->db->get('tb_stock');
 		return $query->result();
+	}
+	function get_po($id){
+		$this->db->where('id_store',$id);
+		$query=$this->db->get('tb_po');
+		return $query->result();
+	}
+
+	function get_po_by_id($id){
+		$this->db->where('id_po',$id);
+		$query=$this->db->get('tb_po');
+		return $query->row();
 	}
 
 	function get_history($id){

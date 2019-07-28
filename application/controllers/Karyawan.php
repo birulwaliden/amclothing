@@ -54,6 +54,18 @@ class Karyawan extends CI_Controller {
 		// echo json_encode($stock);
 	}
 
+	public function po()
+	{
+		$id = $this->session->userdata('id_store');
+		$data2['po']=$this->Amcloth->get_po($id);
+		// foreach ($stock as $s) {
+
+		// }
+		$data['content']=$this->load->view('pages/Karyawan/po',$data2,true);
+		$this->load->view('default_karyawan',$data);
+		// echo json_encode($stock);
+	}
+
 	public function history()
 	{
 		$id = $this->session->userdata('id_store');
@@ -70,10 +82,17 @@ class Karyawan extends CI_Controller {
 
 		echo json_encode($data2);
 	}
+
+
 	public function transaksi()
 	{
 		$data['content']=$this->load->view('pages/Karyawan/transaksi','',true);
 		$this->load->view('default_karyawan',$data);
+	}
+
+	public function struk_po($id){
+		$data['po'] = $this->Amcloth->get_po_by_id($id);
+		$this->load->view('struk_po',$data);
 	}
 
 	public function checkout(){
@@ -134,6 +153,19 @@ class Karyawan extends CI_Controller {
 
 
 		redirect('karyawan/stock');
+	}
+
+	public function save_po()
+	{
+		$data['id_store'] = $this->session->userdata('id_store');
+		$data['nama_pemesan']=$this->input->post('pemesan');
+		$data['no_hp']=$this->input->post('no_hp');
+		$data['keterangan']=$this->input->post('keterangan');
+		$data['dp']=$this->input->post('dp');
+		$data['total']=$this->input->post('total');
+		$data['deleted']='';
+		$this->Amcloth->save_po($data);
+		redirect('karyawan/po');
 	}
 
 	function add_to_cart(){ //fungsi Add To Cart
