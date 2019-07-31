@@ -7,7 +7,7 @@
 				<tr>
 					<td>Kode Barang</td>
 					<td>Nama Barang</td>
-					<td>Id Store</td>
+					<td>Nama Store</td>
 					<td>Jumlah</td>
 					<!-- <td>Action</td> -->
 				</tr>
@@ -19,7 +19,7 @@
 					<tr>
 						<td><?php 	echo $row->kode_barang; ?></td>
 						<td><?php 	echo $row->nama_barang; ?></td>
-						<td><?php 	echo $row->id_store; ?></td>
+						<td><?php 	echo $row->nama_store; ?></td>
 						<td><?php 	echo $row->jumlah; ?></td>
 						<!-- <td><a href="" class="btn btn-info">Detail</a></td> -->
 					</tr>

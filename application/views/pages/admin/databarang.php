@@ -27,10 +27,10 @@
 							<td><?php echo $row->nama_kategori; ?></td>
 							<td><?php echo $row->harga_jual; ?></td>
 							<td><?php echo $row->harga_beli; ?></td>
-							<td><img src="<?php echo base_url() ?>admin/set_barcode/<?php echo $row->kode_barang; ?>"></td>
+							<td><a target="_blank" href="<?php echo base_url() ?>admin/set_barcode/<?php echo $row->kode_barang; ?>" ><img src="<?php echo base_url() ?>admin/set_barcode/<?php echo $row->kode_barang; ?>"></a></td>
 							<td><img style="height: 2%" src="<?php echo base_url() ?>fotoproduk/<?php echo $row->foto; ?>"></td>
 							<td><?php echo $row->ukuran; ?></td>
-							<td><a href="<?php echo base_url() ?>admin/hapus_barang/<?php echo $row->kode_barang; ?>" class="btn btn-danger">Hapus</a>
+							<td><a href="javascript:;" onclick="return isconfirm('<?php 	echo site_url("Admin/hapus_barang/".$row->kode_barang); ?>');" class="btn btn-danger">Hapus</a>
 								<a href="<?php echo base_url() ?>admin/edit_barang/<?php echo $row->kode_barang; ?>" class="btn btn-info">Edit</a></td>
 							</tr>
 						<?php } ?>
@@ -110,3 +110,16 @@
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		function isconfirm(url_val){
+			if(confirm('Hapus Data ?') == false)
+			{
+				return false;
+			}
+			else
+			{
+				location.href=url_val;
+			}
+		}
+	</script>

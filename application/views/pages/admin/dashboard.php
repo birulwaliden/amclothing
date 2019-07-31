@@ -33,3 +33,33 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	
+	var graphdata4 = {
+		linecolor : "darkBlue",
+		title: "Thursday",
+		values: [
+		<?php foreach ($history as $h) { ?>
+			{ X: <?php echo $h->tanggal ?>, Y: <?php echo (intval($h->pendapatan/1000)) ?> },
+		<?php } ?>
+
+		]
+	};
+	$(function () {
+		$("#Linegraph").SimpleChart({
+			ChartType: "Line",
+			toolwidth: "50",
+			toolheight: "30",
+			axiscolor: "#E6E6E6",
+			textcolor: "#6E6E6E",
+			showlegends: false,
+			data: [graphdata4],
+			legendsize: "100",
+			legendposition: 'bottom',
+			xaxislabel: 'Tanggal',
+			title: 'Grafik Penjualan Bulan <?php echo date('F') ?>',
+			yaxislabel: 'Pendapatan dalam Rp'
+		});
+	});
+</script>

@@ -16,7 +16,7 @@
 					</div> 
 					<div class="form-group"> 
 						<label for="">Nama Kategori</label> 
-						<input value="<?php echo $kategori->nama_kategori; ?>" type="text" name="nama" class="form-control">
+						<input value="<?php echo $kategori->nama_kategori; ?>" type="text" name="nama" class="form-control" required>
 					</div> 
 					
 					<button type="submit" class="btn btn-default">Edit Kategori</button> 

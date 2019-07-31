@@ -52,7 +52,7 @@ class Karyawan extends CI_Controller {
 	public function stock()
 	{
 		$id = $this->session->userdata('id_store');
-		$data2['stock']=$this->Amcloth->get_stock($id);
+		$data2['stock']=$this->Amcloth->get_stock_all();
 		$data2['barang']=$this->Amcloth->get_barang();
 		$data2['store']=$this->Amcloth->get_store_list($id);
 		// foreach ($stock as $s) {
@@ -128,6 +128,42 @@ class Karyawan extends CI_Controller {
 
 		
 
+	}
+
+	public function kategori()
+	{
+		$data2['kategori']=$this->Amcloth->get_kategori();
+		$data['content']=$this->load->view('pages/karyawan/kategori',$data2,true);
+		$this->load->view('default_karyawan',$data);
+	}
+
+	public function tambah_kategori()
+	{
+		$data['nama_kategori']=$_POST['nama'];
+		$this->Amcloth->save_kategori($data);
+		redirect('Karyawan/kategori');
+	}
+
+	public function update_kategori()
+	{
+		$id=$_POST['id'];
+		$nama=$_POST['nama'];
+		$this->Amcloth->update_kategori($id,$nama);
+		redirect('Karyawan/kategori');
+	}
+
+	public function edit_kategori($id)
+	{
+		$data2['kategori']=$this->Amcloth->edit_kategori($id);
+		$data['content']=$this->load->view('pages/Karyawan/edit_kategori',$data2,true);
+		$this->load->view('default_karyawan',$data);
+
+		// echo json_encode($data2);
+	}
+	public function delete_kategori($id)
+	{
+		$this->Amcloth->delete_kategori($id);
+		redirect('karyawan/kategori');
 	}
 
 	

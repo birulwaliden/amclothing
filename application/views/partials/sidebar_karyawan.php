@@ -28,6 +28,12 @@
 						<i class="fa fa-shopping-cart"></i> <span>Transaksi</span>
 					</a>
 				</li>
+
+				<li class="treeview">
+					<a href="<?php echo base_url() ?>karyawan/kategori">
+						<i class="fa fa-folder"></i> <span>Kategori</span>
+					</a>
+				</li>
 				<!-- <li class="treeview">
 					<a href="<?php echo base_url() ?>karyawan/po">
 						<i class="fa fa-shopping-cart"></i> <span>Purchase Order</span>

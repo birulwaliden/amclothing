@@ -43,12 +43,12 @@ class Superadmin extends CI_Controller {
 		$data['content']=$this->load->view('pages/superadmin/transaksi','',true);
 		$this->load->view('default_superadmin',$data);
 	}
-	public function kategori()
-	{
-		$data2['kategori']=$this->Amcloth->get_kategori();
-		$data['content']=$this->load->view('pages/superadmin/kategori',$data2,true);
-		$this->load->view('default_superadmin',$data);
-	}
+	// public function kategori()
+	// {
+	// 	$data2['kategori']=$this->Amcloth->get_kategori();
+	// 	$data['content']=$this->load->view('pages/superadmin/kategori',$data2,true);
+	// 	$this->load->view('default_superadmin',$data);
+	// }
 
 	public function store()
 	{
@@ -100,6 +100,18 @@ class Superadmin extends CI_Controller {
 		$nama=$_POST['nama'];
 		$this->Amcloth->update_kategori($id,$nama);
 		redirect('superadmin/kategori');
+	}
+
+	public function update_store()
+	{
+		$id=$_POST['id_store'];
+		$data['nama_store'] = $this->input->post('nama');
+		$data['alamat'] = $this->input->post('alamat');
+		$data['no_hp'] = $this->input->post('no_hp');
+		$this->Amcloth->update_store($id,$data);
+
+		$this->session->set_flashdata('msg','Anda telah merubah data store');
+		redirect('superadmin/store');
 	}
 
 

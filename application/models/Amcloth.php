@@ -95,6 +95,12 @@ class Amcloth extends CI_Model {
 		$this->db->update('tb_kategori');
 	}
 
+	function update_store($id,$data){
+		$this->db->set($data);
+		$this->db->where('id_store',$id);
+		$this->db->update('tb_store');
+	}
+
 	function hapus_barang($id){
 		$this->db->set('deleted','1');
 		$this->db->where('kode_barang',$id);
@@ -120,6 +126,13 @@ class Amcloth extends CI_Model {
 
 	function get_stock($id){
 		$this->db->where('id_store',$id);
+		$this->db->join('tb_barang','tb_stock.kode_barang = tb_barang.kode_barang');
+		$query=$this->db->get('tb_stock');
+		return $query->result();
+	}
+
+	function get_stock_all(){
+		$this->db->join('tb_store','tb_stock.id_store = tb_store.id_store');
 		$this->db->join('tb_barang','tb_stock.kode_barang = tb_barang.kode_barang');
 		$query=$this->db->get('tb_stock');
 		return $query->result();

@@ -21,11 +21,11 @@
 
 
 				
-				<li class="treeview">
+<!-- 				<li class="treeview">
 					<a href="<?php echo base_url() ?>superadmin/kategori">
 						<i class="fa fa-folder"></i> <span>Kategori</span>
 					</a>
-				</li>
+				</li> -->
 
 				<li class="treeview">
 					<a href="<?php echo base_url() ?>superadmin/store">
