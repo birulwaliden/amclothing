@@ -6,6 +6,7 @@
 			<thead>
 				<tr>
 					<td>Kode Barang</td>
+					<td>Nama Barang</td>
 					<td>Id Store</td>
 					<td>Jumlah</td>
 					<!-- <td>Action</td> -->
@@ -17,6 +18,7 @@
 					?>
 					<tr>
 						<td><?php 	echo $row->kode_barang; ?></td>
+						<td><?php 	echo $row->nama_barang; ?></td>
 						<td><?php 	echo $row->id_store; ?></td>
 						<td><?php 	echo $row->jumlah; ?></td>
 						<!-- <td><a href="" class="btn btn-info">Detail</a></td> -->
@@ -51,17 +53,11 @@
 					<label for="">Ambil dari store </label>
 					<select required name="store" class="form-control">	
 						<option>--Pilih store--</option>
-						<?php 	if ($this->session->userdata('id_store')==1) { ?>
-							<option value="0">Stock Baru</option>
-							<option value="2">Store 2</option>
-							<option value="3">Store 3</option>
-						<?php 	} else if ($this->session->userdata('id_store')==2) { ?>
-							<option value="1">Store 1</option>
-							<option value="3">Store 3</option>
-						<?php 	} else if ($this->session->userdata('id_store')==3) { ?>
-							<option value="1">Store 1</option>
-							<option value="2">Store 2</option>
-						<?php 	} ?>
+						<option value="0">Stock Baru</option>
+						<?php foreach ($store as $s) { ?>
+							<option value="<?php echo $s->id_store ?>"><?php echo $s->nama_store ?></option>
+							
+						<?php	} ?>
 					</select> 
 					<input type="hidden" name="id" class="form-control" value="<?php 	echo $this->session->userdata('id_store'); ?>" readonly> 
 				</div>
@@ -72,3 +68,16 @@
 		</div>
 	</div>
 </div>
+
+
+<?php if ($this->session->flashdata('msg') != '') { ?>
+	
+
+	<script>
+		alert("<?php echo $this->session->flashdata('msg') ?>");
+	</script>
+
+<?php } ?>
+
+
+

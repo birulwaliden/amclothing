@@ -9,7 +9,7 @@
 					<td>Nama Store</td>
 					<td>Alamat</td>
 					<td>No HP</td>
-					<!-- <td>Action</td> -->
+					<td>Action</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -21,9 +21,23 @@
 						<td><?php echo $row->nama_store; ?></td>
 						<td><?php echo $row->alamat; ?></td>
 						<td><?php echo $row->no_hp; ?></td>
-						<!-- <td><a href="btn-btn"></a></td> -->
+						<td><a class="btn btn-danger" href="javascript:;" onclick="return isconfirm('<?php echo site_url("Superadmin/delete_store/".$row->id_store); ?>');">Delete</a>
+						</td>
 					</tr>
 				<?php } ?>
+
+				<script type="text/javascript">
+					function isconfirm(url_val){
+						if(confirm('Are you sure ?') == false)
+						{
+							return false;
+						}
+						else
+						{
+							location.href=url_val;
+						}
+					}
+				</script>
 			</tbody>
 		</table>
 
@@ -42,16 +56,16 @@
 					</div> 
 					<div class="form-group"> 
 						<label for="">username</label> 
-						<input type="text" name="username" class="form-control"> 
+						<input type="text" name="username" class="form-control" required> 
 					</div>
 
 					<div class="form-group"> 
 						<label for="">Alamat</label> 
-						<input type="text" name="alamat" class="form-control"> 
+						<input type="text" name="alamat" class="form-control" required> 
 					</div> 
 					<div class="form-group"> 
 						<label for="">No HP</label> 
-						<input type="text" name="nohp" class="form-control"> 
+						<input type="tel" name="nohp" class="form-control" required> 
 					</div> 
 
 					<button type="submit" class="btn btn-default">Tambah Store</button> 
@@ -60,3 +74,13 @@
 		</div>
 	</div>
 </div>
+
+
+<?php if ($this->session->flashdata('msg') != '') { ?>
+	
+
+	<script>
+		alert("<?php echo $this->session->flashdata('msg') ?>");
+	</script>
+
+<?php } ?>

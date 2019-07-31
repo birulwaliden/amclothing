@@ -9,11 +9,11 @@
 <script>
 	
 	var graphdata4 = {
-		linecolor: "Random",
+		linecolor : "darkBlue",
 		title: "Thursday",
 		values: [
 		<?php foreach ($history as $h) { ?>
-			{ X: <?php echo $h->tanggal ?>, Y: <?php echo $h->pendapatan ?> },
+			{ X: <?php echo $h->tanggal ?>, Y: <?php echo (intval($h->pendapatan/1000)) ?> },
 		<?php } ?>
 
 		]
@@ -22,16 +22,16 @@
 		$("#Linegraph").SimpleChart({
 			ChartType: "Line",
 			toolwidth: "50",
-			toolheight: "25",
+			toolheight: "30",
 			axiscolor: "#E6E6E6",
 			textcolor: "#6E6E6E",
 			showlegends: false,
 			data: [graphdata4],
-			legendsize: "140",
+			legendsize: "100",
 			legendposition: 'bottom',
-			xaxislabel: 'Pendapatan dalam Rp',
-			title: 'Daily Profit',
-			yaxislabel: 'Profit in $'
+			xaxislabel: 'Tanggal',
+			title: 'Grafik Penjualan Bulan <?php echo date('F') ?>',
+			yaxislabel: 'Pendapatan dalam Rp'
 		});
 	});
 </script>

@@ -75,6 +75,12 @@ class Amcloth extends CI_Model {
 		$this->db->update('tb_kategori');
 	}
 
+	function delete_store($id){
+		$this->db->set('deleted','1');
+		$this->db->where('id_store',$id);
+		$this->db->update('tb_store');
+	}
+
 	function edit_kategori($id){
 		$this->db->select('tb_kategori.*');
 		$this->db->from('tb_kategori');
@@ -114,7 +120,15 @@ class Amcloth extends CI_Model {
 
 	function get_stock($id){
 		$this->db->where('id_store',$id);
+		$this->db->join('tb_barang','tb_stock.kode_barang = tb_barang.kode_barang');
 		$query=$this->db->get('tb_stock');
+		return $query->result();
+	}
+
+	function get_store_list($id){
+		$this->db->where_not_in('id_store',$id);
+		$this->db->where('JenisUser','0');
+		$query=$this->db->get('tb_store');
 		return $query->result();
 	}
 	function get_po($id){
@@ -205,11 +219,23 @@ class Amcloth extends CI_Model {
 		$this->db->select('sum(tb_struk.total) as pendapatan, DATE_FORMAT(tb_transaksi.tgl_transaksi, "%d") as tanggal,tb_struk.id_store');
 		$this->db->join('tb_transaksi','tb_transaksi.id_struk = tb_struk.id_struk');
 		$this->db->where('tb_struk.id_store',$id);
+		$this->db->where('MONTH(tb_transaksi.tgl_transaksi)',date('m'));
 		$this->db->group_by('date(tb_transaksi.tgl_transaksi)');
-		$this->db->order_by('date(tb_transaksi.tgl_transaksi)','DESC');
+		$this->db->order_by('date(tb_transaksi.tgl_transaksi)','ASC');
 		$query = $this->db->get('tb_struk');
-		
+
 		return $query->result();
+	}
+
+	function get_penjualan_bulan($id){
+		$this->db->select('sum(tb_struk.total) as pendapatan');
+		$this->db->join('tb_transaksi','tb_transaksi.id_struk = tb_struk.id_struk');
+		$this->db->where('tb_struk.id_store',$id);
+		$this->db->where('MONTH(tb_transaksi.tgl_transaksi)',date('m'));
+		$this->db->group_by('MONTH(tb_transaksi.tgl_transaksi)');
+		$query = $this->db->get('tb_struk');
+
+		return $query->row();
 	}
 
 	function get_laporan_penjualan(){
@@ -219,7 +245,7 @@ class Amcloth extends CI_Model {
 		$this->db->group_by('date(tb_transaksi.tgl_transaksi)');
 		$this->db->order_by('date(tb_transaksi.tgl_transaksi)','DESC');
 		$query = $this->db->get('tb_struk');
-		
+
 		return $query->result();
 	}
 
@@ -230,13 +256,21 @@ class Amcloth extends CI_Model {
 		$this->db->where('tb_struk.id_store',$id);
 		// $this->db->group_by('tb_stock.kode_barang');
 		$query = $this->db->get('tb_struk');
-		
+
 		return $query->result();
 	}
 
 	function get_stock_barang($id,$kode_barang){
 		$this->db->where('id_store',$id);
 		$this->db->where('kode_barang',$kode_barang);
+		$query = $this->db->get('tb_stock');
+		return $query->row();
+	}
+
+	function get_stock_jumlah_barang($id,$kode_barang,$jumlah){
+		$this->db->where('id_store',$id);
+		$this->db->where('kode_barang',$kode_barang);
+		$this->db->where('jumlah >=',$jumlah);
 		$query = $this->db->get('tb_stock');
 		return $query->row();
 	}

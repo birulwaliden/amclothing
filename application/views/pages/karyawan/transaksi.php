@@ -66,7 +66,7 @@
 							<div class="input-group">
 								
 								<span class="input-group-addon">Rp.</span>
-								<input id="bayar" min="<?php echo $this->cart->total() ?>" required type="number" name="bayar" class="form-control"> 
+								<input id="bayar" min="<?php echo intval($this->cart->total()) ?>" required type="number" name="bayar" class="form-control"> 
 							</div>
 						</div>
 
@@ -115,7 +115,7 @@
 					}
 				});
 
-
+				location.reload()
 			});
 
         // Load shopping cart

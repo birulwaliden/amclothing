@@ -26,8 +26,16 @@ class Karyawan extends CI_Controller {
 	{
 		$id = $this->session->userdata('id_store');
 		$data['history']=$this->Amcloth->get_grap($id);
-		$data['content']=$this->load->view('pages/Karyawan/dashboard','',true);
+		
+		$pendapatan=$this->Amcloth->get_penjualan_bulan($id);
+		if ($pendapatan == '') {
+			$data['pendapatan']=0;
+		}else{
+			$data['pendapatan']=$pendapatan->pendapatan;
+		}
+		$data['content']=$this->load->view('pages/Karyawan/dashboard',$data,true);
 		$this->load->view('default_karyawan',$data);
+
 		// echo json_encode($data);
 	}
 
@@ -46,12 +54,13 @@ class Karyawan extends CI_Controller {
 		$id = $this->session->userdata('id_store');
 		$data2['stock']=$this->Amcloth->get_stock($id);
 		$data2['barang']=$this->Amcloth->get_barang();
+		$data2['store']=$this->Amcloth->get_store_list($id);
 		// foreach ($stock as $s) {
 
 		// }
 		$data['content']=$this->load->view('pages/Karyawan/stock',$data2,true);
 		$this->load->view('default_karyawan',$data);
-		// echo json_encode($stock);
+		// echo json_encode($data2['stock']);
 	}
 
 	public function po()
@@ -135,19 +144,51 @@ class Karyawan extends CI_Controller {
 		
 		if ($store > 0	) {
 			$ambil = $_POST['jumlah'];
-			$jumlah =$this->Amcloth->get_jumlah_stock($kode_barang,$store);
-			$jumlah = $jumlah->jumlah - $ambil;
-			$this->Amcloth->update_jumlah_stock($kode_barang,$store,$jumlah);
-			// echo json_encode($jumlah);
-		}
-		$get_stock = $this->Amcloth->get_stock_barang($id,$data['kode_barang']);
-		if (!empty($get_stock)) {
+			$get_stock_lain = $this->Amcloth->get_stock_jumlah_barang($store,$data['kode_barang'],$ambil);
+			
+			if ($get_stock_lain=='') {
+				$this->session->set_flashdata('msg','Stock Tidak Ada');
+				// echo "gada stok";
+			}else{
+				echo json_encode($get_stock_lain);
+				$jumlah = intval($get_stock_lain->jumlah) - intval($ambil);
+				// echo json_encode($jumlah);
+				
+				$this->Amcloth->update_jumlah_stock($get_stock_lain->kode_barang,$get_stock_lain->id_store,$jumlah);
+
+				$get_stock = $this->Amcloth->get_stock_barang($id,$data['kode_barang']);
+				if (!empty($get_stock)) {
+					$this->Amcloth->ambil_stock($get_stock->id_stock,$data['jumlah']);
+					$this->session->set_flashdata('msg','Anda telah menambahkan stock');
+					// echo "ambil stock dari store";
+				}else{
+					$this->Amcloth->save_stock($data);
+					// echo "nambah stock dari store lain";
+					$this->session->set_flashdata('msg','Anda telah menambahkan stock');
+				}
+				
+
+			}
+
+			// $jumlah =$this->Amcloth->get_jumlah_stock($kode_barang,$store);
+
+			
+		} else{
+			$get_stock = $this->Amcloth->get_stock_barang($id,$data['kode_barang']);
+			if (!empty($get_stock)) {
 			// echo $get_stock->id_stock;
-			$this->Amcloth->ambil_stock($get_stock->id_stock,$data['jumlah']);
-		}else{
+				$this->Amcloth->ambil_stock($get_stock->id_stock,$data['jumlah']);
+				// echo "nambah stock dari pusat";
+				$this->session->set_flashdata('msg','anda telah mengambil stock dari pusat');
+			}else{
 			// echo "gagal";
-			$this->Amcloth->save_stock($data);
+				$this->Amcloth->save_stock($data);
+				// echo "ambil data dari pusat";
+				$this->session->set_flashdata('msg','anda telah menambahkan stock dari pusat');
+			}	
 		}
+
+		
 		
 
 

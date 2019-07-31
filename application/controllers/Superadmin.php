@@ -87,6 +87,13 @@ class Superadmin extends CI_Controller {
 
 		echo json_encode($data2);
 	}
+
+	public function delete_store($id)
+	{
+		$this->Amcloth->delete_store($id);
+		$this->session->set_flashdata('msg','Data store telah terhapus');
+		redirect('Superadmin/store');
+	}
 	public function update_kategori()
 	{
 		$id=$_POST['id'];

@@ -4,7 +4,7 @@
 		<div class="blank-page widget-shadow scroll" id="style-2 div1">
 			<div class="agileinfo-cdr">
 				<div class="card-header">
-					<h3>Weekly Sales</h3>
+					<!-- 	<h3>Weekly Sales</h3> -->
 				</div>
 
 				<div id="Linegraph" style="width: 98%; height: 350px">
@@ -13,23 +13,13 @@
 			</div>	
 		</div>
 		<br>
-		<!-- <div class="blank-page widget-shadow scroll" id="style-2 div1">
-			<h1>Riwayat</h1>
+		<div class="blank-page bg-info widget-shadow scroll" id="style-2 div1">
+			<div class="card">
+				<h4>Laporan Penjualan Bulan <?php echo date('F') ?></h4>
+			</div>
+			<h1>RP. <?php echo number_format($pendapatan) ?></h1>
 			
-			<table class="table"> 
-				<tr>
-					<td>Id Riwayat</td>
-					<td>Keterangan</td>
-					<td>Tanggal</td>
-					<td>Action</td>
-				</tr>
-				<tr>
-					<td>1</td>
-					<td>Store AM CLothing Kademangaran Mengambil stok di AM CLothing Singkil</td>
-					<td>1 April 2019</td>
-					<td><a href="" class="btn btn-info">Detail</a></td>
-				</tr>
-			</table>
-		</div> -->
+			
+		</div>
 	</div>
 </div>

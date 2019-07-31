@@ -28,11 +28,11 @@
 						<i class="fa fa-shopping-cart"></i> <span>Transaksi</span>
 					</a>
 				</li>
-				<li class="treeview">
+				<!-- <li class="treeview">
 					<a href="<?php echo base_url() ?>karyawan/po">
 						<i class="fa fa-shopping-cart"></i> <span>Purchase Order</span>
 					</a>
-				</li>
+				</li> -->
 
 				<li class="treeview">
 					<a href="<?php echo base_url() ?>karyawan/history">
