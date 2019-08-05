@@ -24,7 +24,13 @@ class Admin extends CI_Controller {
 	 */
 	public function index()
 	{
-		$data['content']=$this->load->view('pages/admin/dashboard','',true);
+		$pendapatan=$this->Amcloth->get_penjualan_bulan_all();
+		if ($pendapatan == '') {
+			$data['pendapatan']=0;
+		}else{
+			$data['pendapatan']=$pendapatan->pendapatan;
+		}
+		$data['content']=$this->load->view('pages/admin/dashboard',$data,true);
 		$this->load->view('default',$data);
 	}
 	public function barang()

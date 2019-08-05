@@ -251,6 +251,8 @@ class Amcloth extends CI_Model {
 		return $query->row();
 	}
 
+	
+
 	function get_laporan_penjualan(){
 		$this->db->select('sum(tb_struk.total) as pendapatan, DATE_FORMAT(tb_transaksi.tgl_transaksi, "%d %M %Y") as tanggal,tb_struk.id_store');
 		$this->db->join('tb_transaksi','tb_transaksi.id_struk = tb_struk.id_struk');
