@@ -31,7 +31,7 @@
 						</div>
 						<div class="form-group"> 
 							<label for="">Jumlah</label> 
-							<input max="" id="jumlah" type="number" name="jumlah" class="form-control"> 
+							<input max="" id="jumlah" max="0" type="number" name="jumlah" class="form-control"> 
 						</div> 
 
 						<button  class="add_cart btn btn-default">Tambah Transaksi</button>
@@ -152,7 +152,7 @@
 						$('[name="nama"]').val(data.nama_barang);
 						$('[name="harga"]').val(data.harga);
 						$('[name="ukuran"]').val(data.ukuran);
-						document.getElementById("jumlah").setAttribute("max",data.jumlah);
+						$('[name="jumlah"]').attr("max",data.jumlah);
 
 
 					});

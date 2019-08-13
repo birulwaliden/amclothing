@@ -30,6 +30,17 @@ class Admin extends CI_Controller {
 		}else{
 			$data['pendapatan']=$pendapatan->pendapatan;
 		}
+
+		$store1 = $this->Amcloth->get_penjualan_by_store('1');
+		$store2 = $this->Amcloth->get_penjualan_by_store('2');
+		$store3 = $this->Amcloth->get_penjualan_by_store('3');
+		$terbanyak = $this->Amcloth->get_terbanyak('3');
+
+		// echo json_encode($terbanyak);
+		$data['store1'] = $store1;
+		$data['store2'] = $store2;
+		$data['store3'] = $store3;
+		$data['terbanyak'] = $terbanyak;
 		$data['content']=$this->load->view('pages/admin/dashboard',$data,true);
 		$this->load->view('default',$data);
 	}
@@ -73,7 +84,7 @@ class Admin extends CI_Controller {
 		$data['content']=$this->load->view('pages/admin/edit_kategori',$data2,true);
 		$this->load->view('default',$data);
 
-		echo json_encode($data2);
+		// echo json_encode($data2);
 	}
 	public function update_kategori()
 	{

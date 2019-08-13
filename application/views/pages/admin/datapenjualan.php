@@ -21,7 +21,7 @@
 						?>
 						<tr>
 							<td><?php 	echo $no++; ?></td>
-							<td><?php 	echo $row->id_store; ?></td>
+							<td><?php 	echo $row->nama_store; ?></td>
 							<td><?php 	echo $row->pendapatan; ?></td>
 							<td><?php 	echo $row->tanggal; ?></td>
 							<!-- <td><?php 	echo $row->bayar; ?></td> -->

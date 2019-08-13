@@ -24,7 +24,18 @@ class Superadmin extends CI_Controller {
 	 */
 	public function index()
 	{
-		$data['content']=$this->load->view('pages/superadmin/dashboard','',true);
+		$store1 = $this->Amcloth->get_penjualan_by_store('1');
+		$store2 = $this->Amcloth->get_penjualan_by_store('2');
+		// $store3 = $this->Amcloth->get_penjualan_by_store('3');
+		$terbanyak = $this->Amcloth->get_terbanyak('3');
+
+		// echo json_encode($terbanyak);
+		$data['store1'] = $store1;
+		$data['store2'] = $store2;
+		// $data['store3'] = $store3;
+		$data['terbanyak'] = $terbanyak;
+
+		$data['content']=$this->load->view('pages/superadmin/dashboard',$data,true);
 		$this->load->view('default_superadmin',$data);
 	}
 	public function barang()
@@ -70,7 +81,7 @@ class Superadmin extends CI_Controller {
 		$data['username']=$_POST['username'];
 		$data['alamat']=$_POST['alamat'];
 		$data['no_hp']=$_POST['nohp'];
-		$data['password']=md5($_POST['nama']);
+		$data['password']=md5($_POST['username']);
 		$this->Amcloth->save_store($data);
 		redirect('superadmin/store');
 	}

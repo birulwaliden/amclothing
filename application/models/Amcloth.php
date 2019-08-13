@@ -251,15 +251,53 @@ class Amcloth extends CI_Model {
 		return $query->row();
 	}
 
+
+	function get_penjualan_bulan_all(){
+		$this->db->select('sum(tb_struk.total) as pendapatan');
+		$this->db->join('tb_transaksi','tb_transaksi.id_struk = tb_struk.id_struk');
+		// $this->db->where('tb_struk.id_store',$id);
+		// $this->db->where('MONTH(tb_transaksi.tgl_transaksi)',date('m'));
+		$this->db->group_by('MONTH(tb_transaksi.tgl_transaksi)');
+		$query = $this->db->get('tb_struk');
+
+		return $query->row();
+	}
+
 	
 
 	function get_laporan_penjualan(){
-		$this->db->select('sum(tb_struk.total) as pendapatan, DATE_FORMAT(tb_transaksi.tgl_transaksi, "%d %M %Y") as tanggal,tb_struk.id_store');
+		$this->db->select('sum(tb_struk.total) as pendapatan, DATE_FORMAT(tb_transaksi.tgl_transaksi, "%d %M %Y") as tanggal,tb_struk.id_store,tb_store.nama_store');
 		$this->db->join('tb_transaksi','tb_transaksi.id_struk = tb_struk.id_struk');
+		$this->db->join('tb_store','tb_store.id_store = tb_struk.id_store');
 		// $this->db->where('tb_struk.id_store',$id);
 		$this->db->group_by('date(tb_transaksi.tgl_transaksi)');
 		$this->db->order_by('date(tb_transaksi.tgl_transaksi)','DESC');
 		$query = $this->db->get('tb_struk');
+
+		return $query->result();
+	}
+
+	function get_penjualan_by_store($id){
+		$this->db->select('sum(tb_struk.total) as pendapatan, DATE_FORMAT(tb_transaksi.tgl_transaksi, "%m") as bulan,tb_struk.id_store');
+		$this->db->join('tb_transaksi','tb_transaksi.id_struk = tb_struk.id_struk');
+		$this->db->where('tb_struk.id_store',$id);
+		$this->db->group_by('MONTH(tb_transaksi.tgl_transaksi)');
+		$this->db->order_by('MONTH(tb_transaksi.tgl_transaksi)','ASC');
+		$query = $this->db->get('tb_struk');
+
+		return $query->result();
+	}
+
+	function get_terbanyak($id){
+		$this->db->select('sum(tb_transaksi.jumlah) as banyak, tb_stock.kode_barang,tb_barang.nama_barang ');
+		$this->db->join('tb_stock','tb_transaksi.id_stock = tb_stock.id_stock');
+		$this->db->join('tb_barang','tb_stock.kode_barang = tb_barang.kode_barang');
+		// $this->db->where('tb_struk.id_store',$id);
+		// $this->db->group_by('tb_transaksi.id_stock');
+		$this->db->group_by('tb_stock.kode_barang');
+		$this->db->order_by('banyak','desc');
+		$this->db->limit(5);
+		$query = $this->db->get('tb_transaksi');
 
 		return $query->result();
 	}
