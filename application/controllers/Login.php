@@ -30,10 +30,30 @@ class Login extends CI_Controller {
 	{
 		$data['username']=$_POST['username'];
 		$data['password']= md5($_POST['password']);
+
 		$cek=$this->Amcloth->cek_login($data);
+		
+		$data2['tb_karyawan.username']=$_POST['username'];
+		$data2['tb_karyawan.password']= md5($_POST['password']);
+		$cek2=$this->Amcloth->cek_login_karyawan($data2);
 		if (!isset($cek)) {
-			$this->session->set_flashdata('error', 'Username/Password Salah');
-			redirect('Login');
+			if (!isset($cek2)) {
+				$this->session->set_flashdata('error', 'Username/Password Salah');
+				redirect('Login');
+			}else{
+				$user = array(
+					'username' => $cek2->username , 
+					'id_store' => $cek2->id_store ,
+					'nama_store' => $cek2->nama_store , 
+					'nama_karyawan' => $cek2->nama_karyawan , 
+					'alamat' => $cek2->alamat, 
+					'no_hp' => $cek2->no_hp,
+					'jenisuser' => '0'
+				);
+				$this->session->set_userdata($user);
+				redirect('karyawan');
+			}
+
 		}else{
 			$user = array(
 				'username' => $cek->username , 

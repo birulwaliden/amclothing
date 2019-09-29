@@ -26,15 +26,15 @@
 							<input id="harga" readonly type="number" name="harga" class="form-control"> 
 						</div>
 						<div class="form-group"> 
-							<label for="">diskon</label> 
-							<input id="diskon" value="0" type="number" name="diskon" class="form-control"> 
+							<!-- <label for="">diskon</label>  -->
+							<input id="diskon" value="0" type="hidden" value="0" name="diskon" class="form-control"> 
 						</div>
 						<div class="form-group"> 
-							<label for="">Jumlah</label> 
-							<input max="" id="jumlah" max="0" type="number" name="jumlah" class="form-control"> 
+							<!-- <label for="">Jumlah</label>  -->
+							<input max="" id="jumlah" max="0" type="hidden" name="jumlah" value="1" class="form-control"> 
 						</div> 
 
-						<button  class="add_cart btn btn-default">Tambah Transaksi</button>
+						<!-- <button  class="add_cart btn btn-default">Tambah Transaksi</button> -->
 
 
 						<!-- </form>  -->
@@ -156,6 +156,32 @@
 
 
 					});
+					var produk_id    = document.getElementById("kode").value;
+					var produk_nama  = document.getElementById("nama").value;
+					var ukuran  = document.getElementById("ukuran").value;
+					var harga_produk = document.getElementById("harga").value;
+					var quantity     = document.getElementById("jumlah").value;
+					var diskon     = document.getElementById("diskon").value;
+					var harga_jual = parseInt(harga_produk) - parseInt(diskon);
+					$.ajax({
+						url : "<?php echo base_url();?>karyawan/add_to_cart",
+						method : "POST",
+						data : {produk_id: produk_id, produk_nama: produk_nama, produk_harga: harga_jual, quantity: quantity,ukuran: ukuran},
+						success: function(data){
+							$('#detail_cart').html(data);
+							document.getElementById("kode").value="";
+							document.getElementById("nama").value="";
+							document.getElementById("ukuran").value="";
+							document.getElementById("harga").value="";
+							document.getElementById("diskon").value="";
+							document.getElementById("jumlah").value="";
+							document.getElementById("kode").autofocus;
+
+							location.reload()
+						}
+					});
+
+
 
 				}
 			});

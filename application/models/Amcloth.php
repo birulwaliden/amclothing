@@ -15,6 +15,27 @@ class Amcloth extends CI_Model {
 		return $query->row();
 
 	}
+	function cek_login_karyawan($data){
+		$this->db->select('tb_store.id_store,
+			tb_store.nama_store,
+			tb_karyawan.nama_karyawan,
+			tb_store.no_hp,
+			tb_karyawan.username,
+			tb_store.alamat');
+		$this->db->join('tb_store','tb_store.id_store = tb_karyawan.id_store');
+		$this->db->from('tb_karyawan');
+		$this->db->where($data);
+		$query=$this->db->get();
+		return $query->row();
+
+	}
+
+	function reset_pass($id){
+		$username = $this->get_karyawan_by_id($id)->username;
+		$this->db->set('password',md5($username));
+		$this->db->where('id_karyawan',$id);
+		$this->db->update('tb_karyawan');
+	}
 
 	function get_barang(){
 		$this->db->select('tb_barang.*,tb_kategori.nama_kategori');
@@ -34,6 +55,40 @@ class Amcloth extends CI_Model {
 		return$query->result();
 	}
 
+	function cek_username($username){
+		$this->db->where('username',$username);
+		$query=$this->db->get('tb_karyawan');
+		$result =  $query->num_rows();
+
+		if ($result > 0) {
+			return $result;
+		}else{
+			$this->db->where('username',$username);
+			$query=$this->db->get('tb_store');
+			$result =  $query->num_rows();
+			return $result;
+		}
+	}
+
+	function cek_hp($hp){
+		$this->db->where('no_hp',$hp);
+		$query=$this->db->get('tb_karyawan');
+		$result =  $query->num_rows();
+
+		if ($result > 0) {
+			return $result;
+		}else{
+			$this->db->where('no_hp',$hp);
+			$query=$this->db->get('tb_store');
+			$result =  $query->num_rows();
+			return $result;
+		}
+	}
+
+
+
+
+
 	function get_store(){
 		$this->db->select('tb_store.*');
 		$this->db->from('tb_store');
@@ -43,8 +98,30 @@ class Amcloth extends CI_Model {
 		return$query->result();
 	}
 
+	function get_karyawan(){
+		$this->db->select('tb_karyawan.*,tb_store.nama_store');
+		$this->db->join('tb_store','tb_store.id_store = tb_karyawan.id_store');
+		$this->db->from('tb_karyawan');
+		$this->db->where('tb_karyawan.deleted','0');
+		$this->db->where('tb_store.deleted','0');
+		$query=$this->db->get();
+		return$query->result();
+	}
+
+	function get_karyawan_by_id($id){
+		$this->db->where('id_karyawan',$id);
+		$query=$this->db->get('tb_karyawan');
+		return$query->row();
+	}
+
+
+
 	function save_kategori($data){
 		$this->db->insert('tb_kategori',$data);
+	}
+
+	function save_karyawan($data){
+		$this->db->insert('tb_karyawan',$data);
 	}
 	function save_po($data){
 		$this->db->insert('tb_po',$data);
@@ -81,6 +158,12 @@ class Amcloth extends CI_Model {
 		$this->db->update('tb_store');
 	}
 
+	function delete_karyawan($id){
+		$this->db->set('deleted','1');
+		$this->db->where('id_karyawan',$id);
+		$this->db->update('tb_karyawan');
+	}
+
 	function edit_kategori($id){
 		$this->db->select('tb_kategori.*');
 		$this->db->from('tb_kategori');
@@ -99,6 +182,11 @@ class Amcloth extends CI_Model {
 		$this->db->set($data);
 		$this->db->where('id_store',$id);
 		$this->db->update('tb_store');
+	}
+	function update_karyawan($id,$data){
+		$this->db->set($data);
+		$this->db->where('id_karyawan',$id);
+		$this->db->update('tb_karyawan');
 	}
 
 	function hapus_barang($id){
@@ -134,6 +222,7 @@ class Amcloth extends CI_Model {
 	function get_stock_all(){
 		$this->db->join('tb_store','tb_stock.id_store = tb_store.id_store');
 		$this->db->join('tb_barang','tb_stock.kode_barang = tb_barang.kode_barang');
+		$this->db->where('tb_stock.deleted','0');
 		$query=$this->db->get('tb_stock');
 		return $query->result();
 	}
@@ -141,6 +230,7 @@ class Amcloth extends CI_Model {
 	function get_store_list($id){
 		$this->db->where_not_in('id_store',$id);
 		$this->db->where('JenisUser','0');
+		$this->db->where('deleted','0');
 		$query=$this->db->get('tb_store');
 		return $query->result();
 	}
@@ -162,7 +252,31 @@ class Amcloth extends CI_Model {
 		$this->db->where('tb_struk.id_store',$id);
 		// $this->db->group_by('tb_stock.kode_barang');
 		$query = $this->db->get('tb_struk');
-		
+
+		return $query->result();
+	}
+
+	
+	function get_history_tanggal($id,$mulai,$sampai){
+		$this->db->join('tb_transaksi','tb_transaksi.id_struk = tb_struk.id_struk');
+		$this->db->join('tb_stock','tb_stock.id_stock = tb_transaksi.id_stock');
+		$this->db->where('date(tb_transaksi.tgl_transaksi) >= ',$mulai);
+		$this->db->where('date(tb_transaksi.tgl_transaksi) <= ',$sampai);
+		$this->db->where('tb_struk.id_store',$id);
+		// $this->db->group_by('tb_stock.kode_barang');
+		$query = $this->db->get('tb_struk');
+
+		return $query->result();
+	}
+
+	function get_history_admin($id,$tanggal){
+		$this->db->join('tb_transaksi','tb_transaksi.id_struk = tb_struk.id_struk');
+		$this->db->join('tb_stock','tb_stock.id_stock = tb_transaksi.id_stock');
+		$this->db->where('tb_struk.id_store',$id);
+		$this->db->where('date(tb_transaksi.tgl_transaksi)',$tanggal);
+		// $this->db->group_by('tb_stock.kode_barang');
+		$query = $this->db->get('tb_struk');
+
 		return $query->result();
 	}
 
@@ -172,7 +286,7 @@ class Amcloth extends CI_Model {
 		// $this->db->where('tb_struk.id_store',$id);
 		// $this->db->group_by('tb_stock.kode_barang');
 		$query = $this->db->get('tb_struk');
-		
+
 		return $query->result();
 	}
 
@@ -183,7 +297,7 @@ class Amcloth extends CI_Model {
 		$this->db->where('tb_struk.id_struk',$id);
 		// $this->db->group_by('tb_stock.kode_barang');
 		$query = $this->db->get('tb_struk');
-		
+
 		return $query->result();
 	}
 
@@ -224,7 +338,7 @@ class Amcloth extends CI_Model {
 		$this->db->where('tb_struk.id_store',$id);
 		// $this->db->group_by('tb_stock.kode_barang');
 		$query = $this->db->get('tb_struk');
-		
+
 		return $query->result();
 	}
 
@@ -263,10 +377,10 @@ class Amcloth extends CI_Model {
 		return $query->row();
 	}
 
-	
+
 
 	function get_laporan_penjualan(){
-		$this->db->select('sum(tb_struk.total) as pendapatan, DATE_FORMAT(tb_transaksi.tgl_transaksi, "%d %M %Y") as tanggal,tb_struk.id_store,tb_store.nama_store');
+		$this->db->select('sum(tb_struk.total) as pendapatan, DATE_FORMAT(tb_transaksi.tgl_transaksi, "%d %M %Y") as tanggal,tb_struk.id_store,tb_store.nama_store, date(tb_transaksi.tgl_transaksi) as tgl');
 		$this->db->join('tb_transaksi','tb_transaksi.id_struk = tb_struk.id_struk');
 		$this->db->join('tb_store','tb_store.id_store = tb_struk.id_store');
 		// $this->db->where('tb_struk.id_store',$id);
@@ -288,15 +402,18 @@ class Amcloth extends CI_Model {
 		return $query->result();
 	}
 
+
 	function get_terbanyak($id){
-		$this->db->select('sum(tb_transaksi.jumlah) as banyak, tb_stock.kode_barang,tb_barang.nama_barang ');
+		$this->db->select('sum(tb_transaksi.jumlah) as banyak, tb_stock.kode_barang,tb_barang.nama_barang,tb_store.nama_store ');
 		$this->db->join('tb_stock','tb_transaksi.id_stock = tb_stock.id_stock');
+		$this->db->join('tb_store','tb_stock.id_store = tb_store.id_store');
 		$this->db->join('tb_barang','tb_stock.kode_barang = tb_barang.kode_barang');
 		// $this->db->where('tb_struk.id_store',$id);
 		// $this->db->group_by('tb_transaksi.id_stock');
-		$this->db->group_by('tb_stock.kode_barang');
+		// $this->db->group_by('tb_stock.id_stock');
+		$this->db->group_by('tb_stock.id_store');
 		$this->db->order_by('banyak','desc');
-		$this->db->limit(5);
+		// $this->db->limit(5);
 		$query = $this->db->get('tb_transaksi');
 
 		return $query->result();

@@ -41,7 +41,7 @@
 						<?php 	foreach ($barang as $b) {
 
 							?>
-							<option value="<?php 	echo $b->kode_barang; ?> "><?php 	echo $b->nama_barang; ?></option>
+							<option value="<?php 	echo $b->kode_barang; ?> "><?php echo $b->nama_barang.'-'.$b->ukuran; ?></option>
 						<?php 	} ?>
 					</select>
 				</div>

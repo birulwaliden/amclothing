@@ -78,17 +78,18 @@
 						</div> 
 						<div class="form-group"> 
 							<label for="">Harga Beli</label> 
-							<input required type="text" name="beli" class="form-control" placeholder="Masukan harga beli ..."> 
+							<input required type="number" id="beli" name="beli" class="form-control" placeholder="Masukan harga beli ..."> 
 						</div> 
 						<div class="form-group"> 
 							<label for="">Harga Jual</label> 
-							<input required type="text" name="jual" class="form-control" placeholder="Masukan harga jual ..."> 
+							<input required type="number" id="jual" name="jual" class="form-control" placeholder="Masukan harga jual ..."> 
 						</div>
 
 						<div class="form-group"> 
 
 							<label for="exampleInputFile">Pilih Foto</label> 
-							<input required name="foto" type="file" id="exampleInputFile"> 
+							<!-- <input required name="foto" type="file" id="exampleInputFile" accept="image/*">  -->
+							<input required name="foto" type="file" id="exampleInputFile" > 
 							<p class="help-block">Tambahkan foto produk</p> 
 						</div> 
 						<div class="form-group">
@@ -99,7 +100,7 @@
 								<div class="radio-inline"><label><input id="ukuran" name="ukuran" type="radio" value="L"> L</label></div>
 								<div class="radio-inline"><label><input id="ukuran" name="ukuran" type="radio" value="XL"> XL</label></div>
 								<div class="radio-inline"><label><input id="ukuran" name="ukuran" type="radio" value="XXL"> XXL</label></div>
-								<div class="radio-inline"><label><input id="ukuran" name="ukuran" type="radio" value="ALL SIZE"> ALL SIZE</label></div>
+								<div class="radio-inline"><label><input id="ukuran" name="ukuran" type="radio" value="ALL_SIZE"> ALL_SIZE</label></div>
 							</div>
 						</div>
 						<br>
@@ -122,4 +123,21 @@
 				location.href=url_val;
 			}
 		}
+	</script>
+
+
+	<script type="text/javascript">
+		<?php if ($this->session->flashdata('alert') != '') { ?>
+			alert('<?php echo $this->session->flashdata('alert') ?>');
+		<?php } ?>
+
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#beli').on('input',function(){
+				var harga_jual = $('#beli').val();
+				$('#jual').attr('min',harga_jual);
+			});
+
+		});
 	</script>

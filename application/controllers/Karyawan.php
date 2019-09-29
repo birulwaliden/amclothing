@@ -92,6 +92,42 @@ class Karyawan extends CI_Controller {
 		echo json_encode($data2);
 	}
 
+	public function laporan_cetak(){
+		$mulai = $this->input->post('mulai');
+		$sampai = $this->input->post('sampai');
+		$tipe = $this->input->post('tipe');
+
+		$data2['mulai'] = $mulai;
+		$data2['sampai'] = $sampai;
+		$id = $this->session->userdata('id_store');
+
+		if ($mulai != null && $sampai != null) {
+			$data2['history']=$this->Amcloth->get_history_tanggal($id,$mulai,$sampai);
+		}else{
+			$data2['history']=$this->Amcloth->get_history($id);
+
+		}
+
+		if ($data2['history'] != null) {
+			if ($tipe == 'PDF') {
+				$this->load->view('pages/Karyawan/cetak_pdf', $data2);;
+				
+			}else{
+				$this->load->view('pages/Karyawan/cetak_excel', $data2);;
+			}
+
+		}else{
+			$this->session->set_flashdata('allert', 'Data tidak ditemukan');
+			// $this->session->flashdata('allert','Data tidak ditemukan');
+			redirect('Karyawan/history');
+		}
+
+		// echo json_encode($data2);
+
+		
+
+	}
+
 
 	public function transaksi()
 	{
@@ -133,7 +169,7 @@ class Karyawan extends CI_Controller {
 	public function kategori()
 	{
 		$data2['kategori']=$this->Amcloth->get_kategori();
-		$data['content']=$this->load->view('pages/karyawan/kategori',$data2,true);
+		$data['content']=$this->load->view('pages/Karyawan/kategori',$data2,true);
 		$this->load->view('default_karyawan',$data);
 	}
 

@@ -19,6 +19,7 @@
 			<table class="table"> 
 				<tr>
 					<td>No</td>
+					<td>Nama Store</td>
 					<td>Kode Barang</td>
 					<td>Nama Barang</td>
 					<td>Jumlah</td>
@@ -26,6 +27,7 @@
 				<?php $no=1; foreach ($terbanyak as $row): ?>
 				<tr>
 					<td><?php echo $no++; ?></td>
+					<td><?php echo $row->nama_store; ?></td>
 					<td><?php echo $row->kode_barang; ?></td>
 					<td><?php echo $row->nama_barang; ?></td>
 					<td><?php echo $row->banyak; ?></td>

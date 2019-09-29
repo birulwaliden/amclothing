@@ -32,6 +32,11 @@
 						<i class="fa fa-folder"></i> <span>Data Store</span>
 					</a>
 				</li>
+				<li class="treeview">
+					<a href="<?php echo base_url() ?>superadmin/karyawan">
+						<i class="fa fa-group"></i> <span>Data Karyawan</span>
+					</a>
+				</li>
 
 
 			</ul>

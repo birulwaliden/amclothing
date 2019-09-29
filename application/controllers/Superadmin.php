@@ -68,6 +68,40 @@ class Superadmin extends CI_Controller {
 		$this->load->view('default_superadmin',$data);
 	}
 
+
+	public function karyawan()
+	{
+
+		$data2['store']=$this->Amcloth->get_store();
+		$data2['karyawan']=$this->Amcloth->get_karyawan();
+		$data['content']=$this->load->view('pages/superadmin/karyawan',$data2,true);
+		$this->load->view('default_superadmin',$data);
+	}
+
+	public function tambah_karyawan()
+	{
+		$data['nama_karyawan']=$_POST['nama'];
+		$data['username']=$_POST['username'];
+		$data['id_store']=$_POST['id_store'];
+		$data['no_hp']=$_POST['nohp'];
+		$data['password']=md5($_POST['username']);
+		$cek = $this->Amcloth->cek_username($data['username']);
+		if ($cek > 0) {
+			$this->session->set_flashdata('msg','Username sudah ada , silahkan gunakan username lain');
+			redirect('superadmin/karyawan');	
+		}else{
+			$cek_hp = $this->Amcloth->cek_hp($data['no_hp']);
+			if ($cek_hp > 0) {
+				$this->session->set_flashdata('msg','No HP sudah ada , silahkan gunakan yang lain');
+				redirect('superadmin/store');	
+			}else{
+				$this->Amcloth->save_karyawan($data);
+				redirect('superadmin/karyawan');	
+			}
+		}
+
+	}
+
 	public function tambah_kategori()
 	{
 		$data['nama_kategori']=$_POST['nama'];
@@ -82,8 +116,23 @@ class Superadmin extends CI_Controller {
 		$data['alamat']=$_POST['alamat'];
 		$data['no_hp']=$_POST['nohp'];
 		$data['password']=md5($_POST['username']);
-		$this->Amcloth->save_store($data);
-		redirect('superadmin/store');
+		$cek = $this->Amcloth->cek_username($data['username']);
+		
+		if ($cek > 0) {
+			$this->session->set_flashdata('msg','Username sudah ada , silahkan gunakan username lain');
+			redirect('superadmin/store');	
+		}else{
+			$cek_hp = $this->Amcloth->cek_hp($data['no_hp']);
+			if ($cek_hp > 0) {
+				$this->session->set_flashdata('msg','No HP sudah ada , silahkan gunakan yang lain');
+				redirect('superadmin/store');	
+			}else{
+				$this->Amcloth->save_store($data);
+				redirect('superadmin/store');
+			}
+			
+		}
+		
 	}
 	public function delete_kategori($id)
 	{
@@ -105,6 +154,22 @@ class Superadmin extends CI_Controller {
 		$this->session->set_flashdata('msg','Data store telah terhapus');
 		redirect('Superadmin/store');
 	}
+
+	public function delete_karyawan($id)
+	{
+		$this->Amcloth->delete_karyawan($id);
+		$this->session->set_flashdata('msg','Data karyawan telah terhapus');
+		redirect('Superadmin/karyawan');
+	}
+
+	public function reset_pass($id)
+	{
+		
+		$this->Amcloth->reset_pass($id);
+		$this->session->set_flashdata('msg','Password telah direset');
+		redirect('Superadmin/karyawan');
+	}
+
 	public function update_kategori()
 	{
 		$id=$_POST['id'];
@@ -123,6 +188,19 @@ class Superadmin extends CI_Controller {
 
 		$this->session->set_flashdata('msg','Anda telah merubah data store');
 		redirect('superadmin/store');
+	}
+
+	public function update_karyawan()
+	{
+		$id=$_POST['id_karyawan'];
+		$data['nama_karyawan'] = $this->input->post('nama');
+		$data['username'] = $this->input->post('username');
+		$data['password'] = md5($this->input->post('username'));
+		$data['no_hp'] = $this->input->post('no_hp');
+		$this->Amcloth->update_karyawan($id,$data);
+
+		$this->session->set_flashdata('msg','Anda telah merubah data karyawan');
+		redirect('superadmin/karyawan');
 	}
 
 

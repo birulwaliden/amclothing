@@ -22,7 +22,7 @@
 							<option value="<?php echo $barang->id_kategori; ?>"><?php echo $barang->nama_kategori; ?></option>
 							<option value="" disabled>-Pilih Kategori-</option>
 							<?php foreach ($kategori as $k ) {?>
-							<option value="<?php echo $k->id_kategori ?>"><?php echo $k->nama_kategori ?></option>
+								<option value="<?php echo $k->id_kategori ?>"><?php echo $k->nama_kategori ?></option>
 							<?php } ?>
 						</select>
 					</div> 
@@ -35,7 +35,7 @@
 						<input type="text" value="<?php echo $barang->harga_jual?>" name="jual" class="form-control"> 
 					</div> 
 					<div class="form-group"> 
-						<img src="<?php echo base_url() ?>fotoproduk/<?php echo $barang->foto ?>" style="width: 20%"> 
+						<img src="<?php echo base_url() ?>fotoproduk/<?php echo $barang->foto ?>" accept="image/*" style="width: 20%"> 
 						<label for="exampleInputFile">Pilih Foto</label> 
 						<input name="foto" type="file" id="exampleInputFile"> 
 						<p class="help-block">Tambahkan foto produk</p> 

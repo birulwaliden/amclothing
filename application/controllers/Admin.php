@@ -43,6 +43,8 @@ class Admin extends CI_Controller {
 		$data['terbanyak'] = $terbanyak;
 		$data['content']=$this->load->view('pages/admin/dashboard',$data,true);
 		$this->load->view('default',$data);
+
+		// echo json_encode($data['terbanyak']);
 	}
 	public function barang()
 	{
@@ -112,11 +114,10 @@ class Admin extends CI_Controller {
 
 		if ( ! $this->upload->do_upload('foto')){
 			$error = array('error' => $this->upload->display_errors());
-			//$this->session->set_flashdata('alert','gagal');
-// redirect('halaman');
-			//redirect($_SERVER['HTTP_REFERER']);
+			$this->session->set_flashdata('alert','file terlalu besar / type file tidak sesuai');
+			redirect($_SERVER['HTTP_REFERER']);
 
-			echo json_encode($error);
+			// echo json_encode($error);
 		}else{
 			$this->Amcloth->save_barang($data);
 			redirect('admin/barang');
@@ -190,6 +191,15 @@ class Admin extends CI_Controller {
 		$data['content']=$this->load->view('pages/admin/datapenjualan',$data2,true);
 		$this->load->view('default',$data);
 		// echo json_encode($data2);
+	}
+
+	public function detailpenjualanstore()
+	{
+		$id = $this->input->post('id_store');
+		$tanggal = $this->input->post('tanggal');
+		$data2['history']=$this->Amcloth->get_history_admin($id,$tanggal);
+		$data['content']=$this->load->view('pages/admin/history',$data2,true);
+		$this->load->view('default',$data);
 	}
 
 	public function detailpenjualan($id)
