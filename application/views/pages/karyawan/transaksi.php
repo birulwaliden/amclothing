@@ -26,8 +26,8 @@
 							<input id="harga" readonly type="number" name="harga" class="form-control"> 
 						</div>
 						<div class="form-group"> 
-							<!-- <label for="">diskon</label>  -->
-							<input id="diskon" value="0" type="hidden" value="0" name="diskon" class="form-control"> 
+							<label for="">diskon</label> 
+							<input id="diskon" value="0" type="number" name="diskon" class="form-control"> 
 						</div>
 						<div class="form-group"> 
 							<!-- <label for="">Jumlah</label>  -->
@@ -148,12 +148,12 @@
 				data : {kode: kode},
 				cache:false,
 				success: function(data){
-					$.each(data,function(kode, nama_barang, harga, ukuran, jumlah){
+					$.each(data,function(kode, nama_barang, harga, ukuran, jumlah, diskon){
 						$('[name="nama"]').val(data.nama_barang);
 						$('[name="harga"]').val(data.harga);
 						$('[name="ukuran"]').val(data.ukuran);
 						$('[name="jumlah"]').attr("max",data.jumlah);
-
+						$('[name="diskon"]').val(data.diskon);
 
 					});
 					var produk_id    = document.getElementById("kode").value;

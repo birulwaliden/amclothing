@@ -11,6 +11,7 @@
 						<td>Kategori</td>
 						<td>Harga Beli</td>
 						<td>Harga Jual</td>
+						<td>Diskon</td>
 						<td>Barcode</td>
 						<td>Foto</td>
 						<td>Ukuran</td>
@@ -27,6 +28,7 @@
 							<td><?php echo $row->nama_kategori; ?></td>
 							<td><?php echo $row->harga_jual; ?></td>
 							<td><?php echo $row->harga_beli; ?></td>
+							<td><?php echo $row->diskon; ?></td>
 							<td><a target="_blank" href="<?php echo base_url() ?>admin/set_barcode/<?php echo $row->kode_barang; ?>" ><img src="<?php echo base_url() ?>admin/set_barcode/<?php echo $row->kode_barang; ?>"></a></td>
 							<td><img style="height: 2%" src="<?php echo base_url() ?>fotoproduk/<?php echo $row->foto; ?>"></td>
 							<td><?php echo $row->ukuran; ?></td>

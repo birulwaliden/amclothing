@@ -465,6 +465,7 @@ class Amcloth extends CI_Model {
 					'harga' => $data->harga_jual,
 					'ukuran' => $data->ukuran,
 					'jumlah' => $data->jumlah,
+					'diskon' => $data->diskon,
 				);
 			}
 		}

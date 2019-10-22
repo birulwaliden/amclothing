@@ -35,6 +35,10 @@
 						<input type="text" value="<?php echo $barang->harga_jual?>" name="jual" class="form-control"> 
 					</div> 
 					<div class="form-group"> 
+						<label for="">Diskon</label> 
+						<input type="number" value="<?php echo $barang->diskon?>" max="<?php echo $barang->harga_jual?>" name="diskon" class="form-control"> 
+					</div> 
+					<div class="form-group"> 
 						<img src="<?php echo base_url() ?>fotoproduk/<?php echo $barang->foto ?>" accept="image/*" style="width: 20%"> 
 						<label for="exampleInputFile">Pilih Foto</label> 
 						<input name="foto" type="file" id="exampleInputFile"> 

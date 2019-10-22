@@ -146,6 +146,7 @@ class Admin extends CI_Controller {
 			$data['id_kategori']=$_POST['kategori'];
 			$data['harga_beli']=$_POST['beli'];
 			$data['harga_jual']=$_POST['jual'];
+			$data['diskon']=$_POST['diskon'];
 			$data['ukuran']=$_POST['ukuran'];
 			$kode=$_POST['kode'];
 			$this->Amcloth->update_barang($data,$kode);
@@ -156,6 +157,7 @@ class Admin extends CI_Controller {
 			$data['id_kategori']=$_POST['kategori'];
 			$data['harga_beli']=$_POST['beli'];
 			$data['harga_jual']=$_POST['jual'];
+			$data['diskon']=$_POST['diskon'];
 			$data['ukuran']=$_POST['ukuran'];
 			$data['foto']=$_FILES["foto"]["name"];
 			$kode=$_POST['kode'];
